@@ -4,6 +4,8 @@ import { FiTablet } from "react-icons/fi";
 import { IoPhonePortraitOutline } from "react-icons/io5";
 import type { DeviceToggleProps } from "@/types/ui";
 
+const SHOW_IPAD = false;
+
 const DeviceToggle = ({ activeDevice, onToggle }: DeviceToggleProps) => {
 	const handleIphoneClick = useCallback(() => onToggle("iphone"), [onToggle]);
 	const handleIpadClick = useCallback(() => onToggle("ipad"), [onToggle]);
@@ -14,16 +16,18 @@ const DeviceToggle = ({ activeDevice, onToggle }: DeviceToggleProps) => {
 				key="iphone"
 				isActive={activeDevice === "iphone"}
 				onClick={handleIphoneClick}
-				label="iPhone"
+				label="性能效果"
 				icon={<IoPhonePortraitOutline className="w-4 h-4" />}
 			/>
-			<DeviceButton
-				key="ipad"
-				isActive={activeDevice === "ipad"}
-				onClick={handleIpadClick}
-				label="iPad"
-				icon={<FiTablet className="w-4 h-4" />}
-			/>
+			{SHOW_IPAD && (
+				<DeviceButton
+					key="ipad"
+					isActive={activeDevice === "ipad"}
+					onClick={handleIpadClick}
+					label="iPad"
+					icon={<FiTablet className="w-4 h-4" />}
+				/>
+			)}
 		</div>
 	);
 };

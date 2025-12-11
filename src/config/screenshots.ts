@@ -2,9 +2,9 @@ import type { Screenshots } from "@/types/app";
 
 export const screenshots: Screenshots = {
 	iphone: [
-		"/assets/screenshots/iphone/1.png",
-		"/assets/screenshots/iphone/2.png",
-		"/assets/screenshots/iphone/3.png",
+		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_3210.MOV",
+		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_3240.MOV",
+		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/22777B13-8914-4AE6-AB17-3B498F491DAC.jpeg",
 	],
 	ipad: [
 		"/assets/screenshots/ipad/1.png",
