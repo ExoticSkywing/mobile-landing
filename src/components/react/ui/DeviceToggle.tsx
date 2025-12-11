@@ -60,7 +60,7 @@ const DeviceButton = memo(
 					transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
 				/>
 			)}
-			<span className="relative z-10 hidden sm:inline">{icon}</span>
+			<span className="relative z-10 inline">{icon}</span>
 			<span className="relative z-10">{label}</span>
 		</motion.button>
 	),
