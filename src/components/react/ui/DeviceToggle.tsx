@@ -16,7 +16,7 @@ const DeviceToggle = ({ activeDevice, onToggle }: DeviceToggleProps) => {
 				key="iphone"
 				isActive={activeDevice === "iphone"}
 				onClick={handleIphoneClick}
-				label="性能效果"
+				label="展示"
 				icon={<IoPhonePortraitOutline className="w-4 h-4" />}
 			/>
 			{SHOW_IPAD && (
