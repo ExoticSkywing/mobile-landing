@@ -38,6 +38,7 @@ export interface Screenshots {
 
 export interface AppHeroProps {
 	title: string;
+	subtitle?: string;
 	description: string;
 	logo: AppLogo;
 	storeLinks: StoreLinks;

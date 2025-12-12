@@ -7,7 +7,8 @@ import type { AppHeroProps } from "@/types/app";
 
 interface Props extends AppHeroProps {}
 
-const { title, description, storeLinks, logo, logoCrop = false } = Astro.props;
+const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Astro.props;
+
 ---
 
 <div class="mb-16 flex flex-col items-center md:items-start md:flex-row gap-8">
@@ -29,7 +30,12 @@ const { title, description, storeLinks, logo, logoCrop = false } = Astro.props;
 
 	<div class="flex flex-1 flex-col justify-between text-center md:text-left">
 		<div>
-			<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-3">{title}</h1>
+			<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-1">{title}</h1>
+			{subtitle && (
+				<p class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">
+					{subtitle}
+				</p>
+			)}
 			<p class="text-lg text-gray-600 dark:text-gray-400 leading-relaxed mb-6 max-w-2xl mx-auto md:mx-0">{description}</p>
 		</div>
 
