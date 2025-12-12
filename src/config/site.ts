@@ -9,7 +9,7 @@ export const siteConfig = {
 	// Whether to crop the logo into a fixed square card
 	logoCrop: false,
 	storeLinks: {
-		apple: "#",
+		apple: "https://xingxy.manyuzo.com",
 		google: "#",
 	},
 	socialLinks,
