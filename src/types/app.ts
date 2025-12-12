@@ -41,6 +41,8 @@ export interface AppHeroProps {
 	description: string;
 	logo: AppLogo;
 	storeLinks: StoreLinks;
+	/** Whether to crop the logo into a fixed square card */
+	logoCrop?: boolean;
 }
 
 export interface FeaturesProps {

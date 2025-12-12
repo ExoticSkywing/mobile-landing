@@ -7,14 +7,24 @@ import type { AppHeroProps } from "@/types/app";
 
 interface Props extends AppHeroProps {}
 
-const { title, description, storeLinks, logo } = Astro.props;
+const { title, description, storeLinks, logo, logoCrop = false } = Astro.props;
 ---
 
 <div class="mb-16 flex flex-col items-center md:items-start md:flex-row gap-8">
 	<div class="flex-shrink-0 md:self-center">
-		<div class="rounded-2xl border border-gray-200/50 dark:border-white/10 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/[0.02] dark:to-white/[0.05] p-6 w-[192px] h-[192px] flex items-center justify-center shadow-sm">
-			<img src={logo} alt="App Icon" class="h-40 w-40 rounded-2xl object-cover" />
-		</div>
+		{logoCrop ? (
+			<div class="rounded-2xl border border-gray-200/50 dark:border-white/10 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/[0.02] dark:to-white/[0.05] p-6 w-[192px] h-[192px] flex items-center justify-center shadow-sm">
+				<img src={logo} alt="App Icon" class="h-40 w-40 rounded-2xl object-cover" />
+			</div>
+		) : (
+			<div class="rounded-2xl border border-gray-200/50 dark:border-white/10 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/[0.02] dark:to-white/[0.05] p-3 inline-flex items-center justify-center shadow-sm">
+				<img
+					src={logo}
+					alt="App Icon"
+					class="max-w-[224px] max-h-[224px] w-auto h-auto object-contain"
+				/>
+			</div>
+		)}
 	</div>
 
 	<div class="flex flex-1 flex-col justify-between text-center md:text-left">

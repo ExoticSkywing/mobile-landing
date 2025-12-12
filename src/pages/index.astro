@@ -15,12 +15,18 @@ import Lightbox from "@react/interactive/Lightbox";
 import Reviews from "@react/interactive/Reviews";
 import Screenshots from "@react/interactive/Screenshots";
 
-const { name: title, description, storeLinks, logo } = siteConfig;
+const { name: title, description, storeLinks, logo, logoCrop } = siteConfig;
 ---
 
 <Layout title={title} description={description}>
   <main class="min-h-screen max-w-5xl mx-auto px-4 py-8">
-    <AppHero title={title} description={description} storeLinks={storeLinks} logo={logo} />
+    <AppHero
+      title={title}
+      description={description}
+      storeLinks={storeLinks}
+      logo={logo}
+      logoCrop={logoCrop}
+    />
     <div class="mb-16"><Screenshots images={screenshots} client:load /></div>
     <Features items={features} />
     <Reviews items={reviews} client:visible />
