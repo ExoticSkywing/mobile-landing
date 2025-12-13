@@ -10,7 +10,7 @@ export const siteConfig = {
 	logoCrop: false,
 	storeLinks: {
 		apple: "https://xingxy.manyuzo.com",
-		google: "#",
+		google: "https://t.me/paraspacesupport",
 	},
 	socialLinks,
 } as const;

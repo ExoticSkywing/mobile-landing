@@ -3,6 +3,7 @@
 /** biome-ignore-all lint/correctness/noUnusedVariables: variables used in Astro components */
 
 import AppHero from "@astro/sections/AppHero.astro";
+import AppMatrixShowcase from "@astro/sections/AppMatrixShowcase.astro";
 import FAQ from "@astro/sections/FAQ.astro";
 import Features from "@astro/sections/Features.astro";
 import { faqs } from "@config/faqs";
@@ -28,6 +29,7 @@ const { name: title, subtitle, description, storeLinks, logo, logoCrop } = siteC
       logo={logo}
       logoCrop={logoCrop}
     />
+    <AppMatrixShowcase />
     <div class="mb-16"><Screenshots images={screenshots} client:load /></div>
     <Features items={features} />
     <Reviews items={reviews} client:visible />
