@@ -2,12 +2,12 @@
 ---
 
 <section class="mb-16">
-	<div class="rounded-3xl bg-black text-white px-6 py-10 md:px-10 md:py-12 shadow-inner shadow-black/60">
+	<div class="rounded-3xl border border-gray-200 bg-white text-gray-900 dark:border-white/10 dark:bg-black dark:text-white px-6 py-10 md:px-10 md:py-12 shadow-inner shadow-black/5 dark:shadow-black/60">
 		<div class="text-center mb-8">
 			<h2 class="text-2xl md:text-3xl font-semibold mb-2">
 				遍布全球，高速互联
 			</h2>
-			<p class="text-sm md:text-base text-white/60">
+			<p class="text-sm md:text-base text-gray-600 dark:text-white/60">
 				覆盖全球100+地区，冰岛、埃及也能一键可达，智能择优路由，尽量为你寻找更快、更稳、更顺滑的路径。
 			</p>
 		</div>
@@ -46,16 +46,16 @@
 				{ code: "eg", name: "埃及" },
 			].map((item) => (
 				<div
-					class="group relative overflow-hidden rounded-xl border border-white/8 bg-white/5 px-3.5 py-2.5 md:px-4 md:py-3 flex items-center gap-3 transition duration-300 hover:border-purple-400/80 hover:bg-gradient-to-r hover:from-purple-500/25 hover:to-fuchsia-500/15 hover:shadow-[0_0_30px_rgba(168,85,247,0.55)]"
+					class="group relative overflow-hidden rounded-xl border border-gray-200 bg-white px-3.5 py-2.5 md:px-4 md:py-3 flex items-center gap-3 transition duration-300 hover:border-purple-400/80 hover:bg-gradient-to-r hover:from-purple-500/10 hover:to-fuchsia-500/10 hover:shadow-[0_0_30px_rgba(168,85,247,0.35)] dark:border-white/8 dark:bg-white/5 dark:hover:from-purple-500/25 dark:hover:to-fuchsia-500/15 dark:hover:shadow-[0_0_30px_rgba(168,85,247,0.55)]"
 				>
-					<div class="relative flex h-8 w-8 items-center justify-center rounded-full overflow-hidden bg-black/40">
+					<div class="relative flex h-8 w-8 items-center justify-center rounded-full overflow-hidden bg-gray-100 dark:bg-black/40">
 						<span
 							class={`fi fi-${item.code} relative z-10 block h-full w-full`}
 						/>
 						<div class="pointer-events-none absolute inset-0 rounded-full bg-purple-500/0 group-hover:bg-purple-500/20 blur-sm transition duration-300" />
 					</div>
 					<div class="flex-1 min-w-0">
-						<p class="text-xs sm:text-sm md:text-base font-medium text-white whitespace-nowrap">
+						<p class="text-xs sm:text-sm md:text-base font-medium text-gray-900 dark:text-white whitespace-nowrap">
 							{item.name}
 						</p>
 					</div>

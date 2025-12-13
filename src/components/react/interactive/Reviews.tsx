@@ -5,7 +5,7 @@ import type { Review, ReviewsProps } from "@/types/app";
 const Reviews = ({ items }: ReviewsProps) => (
 	<div className="mb-16">
 		<h2 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-			User Reviews
+			用戶好評
 		</h2>
 
 		<div className="grid grid-cols-1 gap-6 md:grid-cols-2">

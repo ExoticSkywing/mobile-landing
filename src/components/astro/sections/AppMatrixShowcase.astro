@@ -2,7 +2,7 @@
 ---
 
 <section class="mb-16">
-	<div class="relative overflow-hidden rounded-3xl bg-black">
+	<div class="relative overflow-hidden rounded-3xl border border-gray-200 bg-white text-gray-900 shadow-inner shadow-black/5 dark:border-white/10 dark:bg-black dark:text-white dark:shadow-black/40">
 		<div class="absolute inset-0 pointer-events-none">
 			<div class="matrix-diagonal-wrap absolute -left-1/3 -top-1/3 w-[200%] h-[200%]">
 				<div class="matrix-diagonal-track">
@@ -20,17 +20,18 @@
 					/>
 				</div>
 			</div>
-			<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-black/80" />
+			<div class="absolute inset-0 bg-gradient-to-r from-white/80 via-white/70 to-white/80 dark:from-black/80 dark:via-black/40 dark:to-black/80" />
+			<div class="matrix-vignette absolute inset-0 rounded-3xl" />
 		</div>
 
-		<div class="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center text-white">
-			<p class="text-xs md:text-sm uppercase tracking-[0.25em] text-white/60 mb-3">
+		<div class="relative z-10 px-6 py-12 md:px-10 md:py-16 text-center text-gray-900 dark:text-white">
+			<p class="text-xs md:text-sm uppercase tracking-[0.25em] text-gray-600 dark:text-white/60 mb-3">
 				开启您的全球冲浪之旅
 			</p>
 			<h2 class="text-2xl md:text-3xl font-semibold mb-3">
 				全球APP | 流媒体   一站解锁
 			</h2>
-			<p class="text-sm md:text-base text-white/70 max-w-2xl mx-auto">
+			<p class="text-sm md:text-base text-gray-700 dark:text-white/70 max-w-2xl mx-auto">
 				覆盖全球视频网站，全部解锁，ChatGPT、Telegram、Youtube 等全球 App 无限制随时随地自由访问
 			</p>
 		</div>
@@ -65,5 +66,20 @@
 		height: 100%;
 		object-fit: cover;
 		opacity: 0.9;
+	}
+
+	.matrix-vignette {
+		/* subtle dark corners in light mode */
+		box-shadow:
+			inset 0 0 60px rgba(15, 23, 42, 0.25),
+			inset 0 0 120px rgba(15, 23, 42, 0.16);
+	}
+
+	:root.dark .matrix-vignette,
+	[data-theme="dark"] .matrix-vignette {
+		/* stronger vignette in dark mode */
+		box-shadow:
+			inset 0 0 80px rgba(0, 0, 0, 0.7),
+			inset 0 0 160px rgba(0, 0, 0, 0.85);
 	}
 </style>
