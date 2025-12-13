@@ -3,7 +3,7 @@
 
 <section class="mb-16">
 	<div class="relative overflow-hidden rounded-3xl border border-gray-200 bg-white text-gray-900 shadow-inner shadow-black/5 dark:border-white/10 dark:bg-black dark:text-white dark:shadow-black/40">
-		<div class="absolute inset-0 pointer-events-none">
+		<div class="absolute inset-0 pointer-events-none rounded-3xl overflow-hidden">
 			<div class="matrix-diagonal-wrap absolute -left-1/3 -top-1/3 w-[200%] h-[200%]">
 				<div class="matrix-diagonal-track">
 					<img
@@ -52,6 +52,8 @@
 		transform: rotate(+15deg);
 		transform-origin: center;
 		overflow: hidden;
+		border-radius: inherit;
+		will-change: transform;
 	}
 
 	.matrix-diagonal-track {
