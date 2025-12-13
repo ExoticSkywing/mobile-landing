@@ -1,0 +1,66 @@
+---
+---
+
+<section class="mb-16">
+	<div class="rounded-3xl bg-black text-white px-6 py-10 md:px-10 md:py-12 shadow-inner shadow-black/60">
+		<div class="text-center mb-8">
+			<h2 class="text-2xl md:text-3xl font-semibold mb-2">
+				全球节点，高速稳定连接
+			</h2>
+			<p class="text-sm md:text-base text-white/60">
+				覆盖全球100+地区，冰岛、埃及也能一键可达，智能择优路由，尽量为你寻找更快、更稳、更顺滑的路径。
+			</p>
+		</div>
+
+		<div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
+			{[
+				{ code: "hk", name: "香港" },
+				{ code: "jp", name: "日本" },
+				{ code: "us", name: "美国" },
+				{ code: "gb", name: "英国" },
+				{ code: "sg", name: "新加坡" },
+				{ code: "kr", name: "韩国" },
+				{ code: "tr", name: "土耳其" },
+				{ code: "de", name: "德国" },
+				{ code: "fr", name: "法国" },
+				{ code: "nl", name: "荷兰" },
+				{ code: "in", name: "印度" },
+				{ code: "br", name: "巴西" },
+				{ code: "au", name: "澳大利亚" },
+				{ code: "ca", name: "加拿大" },
+				{ code: "th", name: "泰国" },
+				{ code: "ph", name: "菲律宾" },
+				{ code: "is", name: "冰岛" },
+				{ code: "es", name: "西班牙" },
+				{ code: "it", name: "意大利" },
+				{ code: "se", name: "瑞典" },
+				{ code: "no", name: "挪威" },
+				{ code: "fi", name: "芬兰" },
+				{ code: "dk", name: "丹麦" },
+				{ code: "ch", name: "瑞士" },
+				{ code: "pl", name: "波兰" },
+				{ code: "cz", name: "捷克" },
+				{ code: "gr", name: "希腊" },
+				{ code: "pt", name: "葡萄牙" },
+				{ code: "be", name: "比利时" },
+				{ code: "eg", name: "埃及" },
+			].map((item) => (
+				<div
+					class="group relative overflow-hidden rounded-xl border border-white/8 bg-white/5 px-3.5 py-2.5 md:px-4 md:py-3 flex items-center gap-3 transition duration-300 hover:border-purple-400/80 hover:bg-gradient-to-r hover:from-purple-500/25 hover:to-fuchsia-500/15 hover:shadow-[0_0_30px_rgba(168,85,247,0.55)]"
+				>
+					<div class="relative flex h-8 w-8 items-center justify-center rounded-full overflow-hidden bg-black/40">
+						<span
+							class={`fi fi-${item.code} relative z-10 block h-full w-full`}
+						/>
+						<div class="pointer-events-none absolute inset-0 rounded-full bg-purple-500/0 group-hover:bg-purple-500/20 blur-sm transition duration-300" />
+					</div>
+					<div class="flex-1 min-w-0">
+						<p class="text-xs sm:text-sm md:text-base font-medium text-white whitespace-nowrap">
+							{item.name}
+						</p>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>
