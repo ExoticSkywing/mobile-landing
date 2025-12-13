@@ -3,9 +3,9 @@ import { socialLinks } from "./socialLinks";
 export const siteConfig = {
 	name: "网络优化加速包",
 	subtitle: "ParaSpace | 平行空间",
-	description: "Here you can write a brief description of your application. Tell users about its main features and benefits in 1-2 sentences.",
-	keywords: ["mobile app", "landing page", "astro", "react", "typescript"],
-	logo: "https://api.minio.1yo.cc/nebuluxe/halosparkpix/image_picker_01F84B7A-35F3-4D91-AD6F-FDAD24992A12-27543-00000E42E227CB9D.jpg",
+	description: "助力商家 TikTok 跨境电商顺利出海，更高效率加速 GitHub 等办公访问，打开探索全球前沿 AI 工具并强劲AI赋能的高速通道。获取网络加速服务高达10Gbps的单线接入能力",
+	keywords: ["网络加速", "TikTok", "小火箭", "shadowrocket", "AI", "clash", "loon", "流媒体解锁", "专线", "IEPL", "netflix", "telegram"],
+	logo: "https://api.minio.1yo.cc/nebuluxe/halosparkpix/image_picker_F95682B2-5313-4C1E-882D-D84D126E4BE7-41909-00000F5A7D63DFE7.jpg",
 	// Whether to crop the logo into a fixed square card
 	logoCrop: false,
 	storeLinks: {
