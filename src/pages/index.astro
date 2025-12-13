@@ -4,6 +4,7 @@
 
 import AppHero from "@astro/sections/AppHero.astro";
 import AppMatrixShowcase from "@astro/sections/AppMatrixShowcase.astro";
+import ClientDownloads from "@astro/sections/ClientDownloads.astro";
 import GlobalRegions from "@astro/sections/GlobalRegions.astro";
 import FAQ from "@astro/sections/FAQ.astro";
 import Features from "@astro/sections/Features.astro";
@@ -33,6 +34,7 @@ const { name: title, subtitle, description, storeLinks, logo, logoCrop } = siteC
     <AppMatrixShowcase />
     <div class="mb-16"><Screenshots images={screenshots} client:load /></div>
     <Features items={features} />
+    <ClientDownloads />
     <GlobalRegions />
     <Reviews items={reviews} client:visible />
     <FAQ items={faqs} />
