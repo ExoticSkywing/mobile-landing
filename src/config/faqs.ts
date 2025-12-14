@@ -2,8 +2,8 @@ import type { FAQ } from "@/types/app";
 
 export const faqs: FAQ[] = [
 	{
-		question: "Question 1?",
-		answer: "Answer to question 1 goes here.",
+		question: "我该如何购买？",
+		answer: "顶部加入购物车，24小时无人值守，自动充值",
 	},
 	{
 		question: "Question 2?",
