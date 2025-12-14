@@ -57,7 +57,8 @@ const appleTouchIconURL = Astro.site ? new URL(siteConfig.logo, Astro.site).href
 
       // window.scrollTo(0, 0);
       
-      const theme = localStorage.getItem('theme') || 'system';
+      const storedTheme = localStorage.getItem('theme');
+      const theme = storedTheme || 'dark';
       document.documentElement.classList.remove('light', 'dark');
       
       if (theme === 'system') {
@@ -67,7 +68,9 @@ const appleTouchIconURL = Astro.site ? new URL(siteConfig.logo, Astro.site).href
         document.documentElement.classList.add(theme);
       }
       
-      !localStorage.getItem('theme') && localStorage.setItem('theme', 'system');
+      if (!storedTheme) {
+        localStorage.setItem('theme', 'dark');
+      }
     </script>
   </head>
   <body class="bg-gray-50 text-gray-900 dark:bg-black dark:text-white">
