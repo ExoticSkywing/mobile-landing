@@ -5,7 +5,7 @@ export const screenshots: Screenshots = {
 		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_9899.MP4",
 		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_9858.MP4",
 		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_9878.MP4",
-		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_9903.MOV",
+		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_9905.MP4",
 		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/image-fcgk.png",
 	],
 	ipad: [
