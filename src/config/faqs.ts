@@ -6,11 +6,11 @@ export const faqs: FAQ[] = [
 		answer: "顶部加入购物车，24小时无人值守，自动充值",
 	},
 	{
-		question: "Question 2?",
-		answer: "Answer to question 2 goes here.",
+		question: "我该如何使用？",
+		answer: "和投币一样简单，开盖即喝，开箱即用",
 	},
 	{
-		question: "Question 3?",
-		answer: "Answer to question 3 goes here.",
+		question: "速度如何？快吗？",
+		answer: "请查看上方的性能效果展示，这都是实际测试结果",
 	},
 ];
