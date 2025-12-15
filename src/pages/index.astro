@@ -3,6 +3,7 @@
 /** biome-ignore-all lint/correctness/noUnusedVariables: variables used in Astro components */
 
 import AppHero from "@astro/sections/AppHero.astro";
+import AIGalaxy from "@astro/sections/AIGalaxy.astro";
 import AppMatrixShowcase from "@astro/sections/AppMatrixShowcase.astro";
 import ClientDownloads from "@astro/sections/ClientDownloads.astro";
 import GlobalRegions from "@astro/sections/GlobalRegions.astro";
@@ -32,6 +33,7 @@ const { name: title, subtitle, description, storeLinks, logo, logoCrop } = siteC
       logoCrop={logoCrop}
     />
     <AppMatrixShowcase />
+    <AIGalaxy />
     <div class="mb-16"><Screenshots images={screenshots} client:load /></div>
     <Features items={features} />
     <ClientDownloads />
