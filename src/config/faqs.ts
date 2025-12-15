@@ -13,4 +13,9 @@ export const faqs: FAQ[] = [
 		question: "速度如何？快吗？",
 		answer: "请查看上方的性能效果展示，这都是实际测试结果",
 	},
+	{
+		question: "更多疑问？",
+		answer: "点击查看常见问题",
+		link: "https://wiki.manyuzo.com/cutting-edge-tech/02.%E5%9B%BD%E9%99%85%E7%BD%91%E7%BB%9C%E5%86%B2%E6%B5%AA/issue",
+	},
 ];

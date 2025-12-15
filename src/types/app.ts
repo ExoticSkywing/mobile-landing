@@ -16,6 +16,7 @@ export interface Feature {
 export interface FAQ {
 	question: string;
 	answer: string;
+	link?: string;
 }
 
 export interface Review {
