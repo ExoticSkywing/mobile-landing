@@ -14,13 +14,32 @@
 				<span class="text-3xl md:text-5xl font-semibold leading-none bg-gradient-to-r from-sky-400/80 via-violet-400/80 to-fuchsia-400/80 dark:from-sky-200/95 dark:via-violet-300/95 dark:to-fuchsia-200/95 bg-clip-text text-transparent">
 					网络优化加速计划
 				</span>
-				<span class="text-[10px] md:text-xs font-semibold tracking-[0.32em] px-2.5 py-1 rounded-full bg-gray-900/5 text-gray-700 ring-1 ring-gray-900/10 dark:bg-white/5 dark:text-white/80 dark:ring-white/10 whitespace-nowrap">
-					PRO
-				</span>
+				<a
+					href="https://xingxy.manyuzo.com"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold whitespace-nowrap border border-gray-200 bg-white/60 text-gray-900 hover:bg-white transition-colors dark:border-white/10 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+				>
+					了解 PRO
+				</a>
 			</p>
 			<p class="text-sm md:text-base text-gray-600 dark:text-white/70 max-w-2xl leading-relaxed">
-				开启你的 AI 星图，可<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/15 dark:bg-emerald-400/10 dark:text-emerald-300 dark:ring-emerald-300/15 font-semibold whitespace-nowrap">免费使用</span> OpenAI、Claude、Gemini、LLaMA 等主流最新模型，一键切换，<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-violet-500/10 text-violet-700 ring-1 ring-violet-500/15 dark:bg-violet-400/10 dark:text-violet-300 dark:ring-violet-300/15 font-semibold whitespace-nowrap">灵感不掉线</span>
+				开启你的 AI 星图，可 <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/15 dark:bg-emerald-400/10 dark:text-emerald-300 dark:ring-emerald-300/15 font-semibold whitespace-nowrap">免费使用</span> OpenAI、Claude、Gemini、LLaMA 等主流最新模型，一键切换，<span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-violet-500/10 text-violet-700 ring-1 ring-violet-500/15 dark:bg-violet-400/10 dark:text-violet-300 dark:ring-violet-300/15 font-semibold whitespace-nowrap">灵感不掉线</span>
 			</p>
+			<div class="mt-4 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs md:text-sm text-gray-600/90 dark:text-white/60">
+				<span class="inline-flex items-center gap-2 whitespace-nowrap">
+					<span class="h-1.5 w-1.5 rounded-full bg-violet-500/70 dark:bg-violet-300/70" />
+					更低延迟
+				</span>
+				<span class="inline-flex items-center gap-2 whitespace-nowrap">
+					<span class="h-1.5 w-1.5 rounded-full bg-violet-500/70 dark:bg-violet-300/70" />
+					更稳定
+				</span>
+				<span class="inline-flex items-center gap-2 whitespace-nowrap">
+					<span class="h-1.5 w-1.5 rounded-full bg-violet-500/70 dark:bg-violet-300/70" />
+					更强劲 AI 赋能
+				</span>
+			</div>
 		</div>
 
 		<div class="mt-10 md:mt-12">
@@ -28,6 +47,7 @@
 				<div class="ai-galaxy-center">
 					<span class="ai-galaxy-center-text">AI</span>
 					<span class="ai-galaxy-center-glow" />
+					<span class="ai-galaxy-center-shimmer" />
 				</div>
 
 				<div class="ai-orbit ai-orbit-1">
@@ -167,6 +187,20 @@
 		filter: blur(0.2px);
 		animation: ai-core-spin 5.5s linear infinite;
 		z-index: 0;
+	}
+
+	.ai-galaxy-center-shimmer {
+		position: absolute;
+		inset: calc((var(--ai-core-size) - var(--ai-core-ring-size-safe)) / 2);
+		border-radius: 9999px;
+		background: conic-gradient(from 0deg, rgba(255, 255, 255, 0) 0deg, rgba(255, 255, 255, 0.55) 18deg, rgba(255, 255, 255, 0) 42deg, rgba(255, 255, 255, 0) 360deg);
+		-webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 7px));
+		mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 7px));
+		opacity: 0.35;
+		filter: blur(0.4px);
+		animation: ai-core-shimmer 14s linear infinite;
+		pointer-events: none;
+		z-index: 1;
 	}
 
 	.ai-galaxy-center::after {
@@ -355,6 +389,15 @@
 		}
 	}
 
+	@keyframes ai-core-shimmer {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
 	@media (max-width: 420px) {
 		.ai-orbit-1 {
 			width: 150px;
@@ -382,7 +425,8 @@
 		.ai-galaxy-center,
 		.ai-galaxy-center::before,
 		.ai-galaxy-center::after,
-		.ai-galaxy-center-glow {
+		.ai-galaxy-center-glow,
+		.ai-galaxy-center-shimmer {
 			animation: none;
 		}
 	}
