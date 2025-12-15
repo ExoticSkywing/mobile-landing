@@ -114,7 +114,7 @@
 		isolation: isolate;
 		--ai-core-size: 58px;
 		--ai-core-ring-size: 500px;
-		--ai-core-halo-size: 126px;
+		--ai-core-halo-size: 388px;
 	}
 
 	.ai-galaxy-center {
@@ -150,7 +150,7 @@
 		mask: radial-gradient(farthest-side, transparent calc(100% - 8px), #000 calc(100% - 7px));
 		opacity: 0.65;
 		filter: blur(0.2px);
-		animation: ai-core-spin 6.5s linear infinite;
+		animation: ai-core-spin 5.5s linear infinite;
 		z-index: 0;
 	}
 
@@ -180,10 +180,7 @@
 		font-weight: 700;
 		letter-spacing: 0.12em;
 		font-size: 16px;
-		color: transparent;
-		background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(37, 99, 235, 0.85));
-		-webkit-background-clip: text;
-		background-clip: text;
+		color: rgba(17, 24, 39, 0.92);
 		text-transform: uppercase;
 		position: relative;
 		z-index: 2;
@@ -191,8 +188,26 @@
 	}
 
 	.dark .ai-galaxy-center-text {
-		background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(147, 197, 253, 0.85), rgba(168, 85, 247, 0.75));
+		color: rgba(255, 255, 255, 0.92);
 		text-shadow: 0 0 22px rgba(168, 85, 247, 0.35);
+	}
+
+	@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+		.ai-galaxy-center-text {
+			color: transparent;
+			-webkit-text-fill-color: transparent;
+			background: linear-gradient(135deg, rgba(17, 24, 39, 0.95), rgba(37, 99, 235, 0.85));
+			-webkit-background-clip: text;
+			background-clip: text;
+		}
+
+		.dark .ai-galaxy-center-text {
+			color: transparent;
+			-webkit-text-fill-color: transparent;
+			background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(147, 197, 253, 0.85), rgba(168, 85, 247, 0.75));
+			-webkit-background-clip: text;
+			background-clip: text;
+		}
 	}
 
 	.ai-galaxy-center-glow {
