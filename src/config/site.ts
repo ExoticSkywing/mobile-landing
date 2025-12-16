@@ -5,7 +5,7 @@ export const siteConfig = {
 	subtitle: "ParaSpace · 平行空间",
 	description: "助力商家 TikTok 跨境电商顺利出海，更高效加速 GitHub 等办公访问，打开探索全球前沿 AI 工具并强劲AI赋能的高速通道。获取网络加速服务高达10Gbps的单线接入能力",
 	keywords: ["网络加速", "TikTok", "小火箭", "shadowrocket", "AI", "clash", "loon", "流媒体解锁", "专线", "IEPL", "netflix", "telegram"],
-	logo: "/assets/logo.jpg",
+	logo: "https://api.minio.1yo.cc/nebuluxe/halosparkpix/image_picker_F95682B2-5313-4C1E-882D-D84D126E4BE7-41909-00000F5A7D63DFE7.jpg",
 	// Whether to crop the logo into a fixed square card
 	logoCrop: false,
 	storeLinks: {
