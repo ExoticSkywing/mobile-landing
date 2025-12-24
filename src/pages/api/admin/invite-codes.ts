@@ -1,9 +1,4 @@
-/// <reference types="@cloudflare/workers-types" />
-
-interface Env {
-	LANDING_KV: KVNamespace;
-	ADMIN_SECRET: string;
-}
+import type { APIRoute } from 'astro';
 
 interface InviteCode {
 	code: string;
@@ -14,7 +9,7 @@ interface InviteCode {
 
 // 生成随机邀请码
 function generateCode(length: number = 8): string {
-	const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // 排除易混淆字符
+	const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 	let result = '';
 	for (let i = 0; i < length; i++) {
 		result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -23,10 +18,17 @@ function generateCode(length: number = 8): string {
 }
 
 // GET: 获取所有邀请码
-export const onRequestGet: PagesFunction<Env> = async (context) => {
-	const { request, env } = context;
+export const GET: APIRoute = async ({ request, locals }) => {
+	const runtime = locals.runtime;
+	const env = runtime?.env;
 
-	// 验证管理员密钥
+	if (!env?.LANDING_KV || !env?.ADMIN_SECRET) {
+		return new Response(JSON.stringify({ success: false, error: 'KV 未配置' }), {
+			status: 500,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
+
 	const authHeader = request.headers.get('Authorization');
 	if (authHeader !== `Bearer ${env.ADMIN_SECRET}`) {
 		return new Response(JSON.stringify({ success: false, error: '未授权' }), {
@@ -44,25 +46,31 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 			if (data) codes.push(data);
 		}
 
-		// 按创建时间倒序
 		codes.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
 		return new Response(JSON.stringify({ success: true, codes }), {
 			headers: { 'Content-Type': 'application/json' },
 		});
 	} catch (error) {
-		return new Response(JSON.stringify({ success: false, error: '服务器错误' }), {
+		return new Response(JSON.stringify({ success: false, error: '获取失败' }), {
 			status: 500,
 			headers: { 'Content-Type': 'application/json' },
 		});
 	}
 };
 
-// POST: 生成新邀请码
-export const onRequestPost: PagesFunction<Env> = async (context) => {
-	const { request, env } = context;
+// POST: 生成邀请码
+export const POST: APIRoute = async ({ request, locals }) => {
+	const runtime = locals.runtime;
+	const env = runtime?.env;
 
-	// 验证管理员密钥
+	if (!env?.LANDING_KV || !env?.ADMIN_SECRET) {
+		return new Response(JSON.stringify({ success: false, error: 'KV 未配置' }), {
+			status: 500,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
+
 	const authHeader = request.headers.get('Authorization');
 	if (authHeader !== `Bearer ${env.ADMIN_SECRET}`) {
 		return new Response(JSON.stringify({ success: false, error: '未授权' }), {
@@ -72,25 +80,23 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 	}
 
 	try {
-		const { count = 1 } = await request.json() as { count?: number };
-		const generateCount = Math.min(Math.max(1, count), 50); // 限制 1-50 个
-
+		const body = await request.json() as { count?: number };
+		const count = Math.min(Math.max(body.count || 1, 1), 50);
 		const newCodes: InviteCode[] = [];
-		const now = new Date().toISOString();
 
-		for (let i = 0; i < generateCount; i++) {
+		for (let i = 0; i < count; i++) {
 			let code: string;
 			let exists = true;
 
-			// 确保生成唯一码
 			while (exists) {
 				code = generateCode();
-				exists = !!(await env.LANDING_KV.get(`invite:${code}`));
+				const existing = await env.LANDING_KV.get(`invite:${code}`);
+				exists = !!existing;
 			}
 
 			const inviteCode: InviteCode = {
 				code: code!,
-				createdAt: now,
+				createdAt: new Date().toISOString(),
 			};
 
 			await env.LANDING_KV.put(`invite:${code!}`, JSON.stringify(inviteCode));
@@ -101,7 +107,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 			headers: { 'Content-Type': 'application/json' },
 		});
 	} catch (error) {
-		return new Response(JSON.stringify({ success: false, error: '服务器错误' }), {
+		return new Response(JSON.stringify({ success: false, error: '生成失败' }), {
 			status: 500,
 			headers: { 'Content-Type': 'application/json' },
 		});
@@ -109,10 +115,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 };
 
 // DELETE: 删除邀请码
-export const onRequestDelete: PagesFunction<Env> = async (context) => {
-	const { request, env } = context;
+export const DELETE: APIRoute = async ({ request, locals }) => {
+	const runtime = locals.runtime;
+	const env = runtime?.env;
 
-	// 验证管理员密钥
+	if (!env?.LANDING_KV || !env?.ADMIN_SECRET) {
+		return new Response(JSON.stringify({ success: false, error: 'KV 未配置' }), {
+			status: 500,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
+
 	const authHeader = request.headers.get('Authorization');
 	if (authHeader !== `Bearer ${env.ADMIN_SECRET}`) {
 		return new Response(JSON.stringify({ success: false, error: '未授权' }), {
@@ -122,22 +135,21 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
 	}
 
 	try {
-		const { code } = await request.json() as { code: string };
-
-		if (!code) {
-			return new Response(JSON.stringify({ success: false, error: '请指定邀请码' }), {
+		const body = await request.json() as { code?: string };
+		if (!body.code) {
+			return new Response(JSON.stringify({ success: false, error: '缺少邀请码' }), {
 				status: 400,
 				headers: { 'Content-Type': 'application/json' },
 			});
 		}
 
-		await env.LANDING_KV.delete(`invite:${code}`);
+		await env.LANDING_KV.delete(`invite:${body.code}`);
 
 		return new Response(JSON.stringify({ success: true }), {
 			headers: { 'Content-Type': 'application/json' },
 		});
 	} catch (error) {
-		return new Response(JSON.stringify({ success: false, error: '服务器错误' }), {
+		return new Response(JSON.stringify({ success: false, error: '删除失败' }), {
 			status: 500,
 			headers: { 'Content-Type': 'application/json' },
 		});

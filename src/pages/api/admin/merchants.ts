@@ -1,29 +1,26 @@
-/// <reference types="@cloudflare/workers-types" />
+import type { APIRoute } from 'astro';
 
-interface Env {
-	LANDING_KV: KVNamespace;
-	ADMIN_SECRET: string;
-}
-
-interface MerchantConfig {
+interface Merchant {
 	id: string;
 	shopUrl: string;
 	supportUrl: string;
-	socialLinks?: {
-		instagram?: string;
-		telegram?: string;
-		twitter?: string;
-	};
 	inviteCode: string;
 	createdAt: string;
 	updatedAt: string;
 }
 
 // GET: 获取所有商家
-export const onRequestGet: PagesFunction<Env> = async (context) => {
-	const { request, env } = context;
+export const GET: APIRoute = async ({ request, locals }) => {
+	const runtime = locals.runtime;
+	const env = runtime?.env;
 
-	// 验证管理员密钥
+	if (!env?.LANDING_KV || !env?.ADMIN_SECRET) {
+		return new Response(JSON.stringify({ success: false, error: 'KV 未配置' }), {
+			status: 500,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
+
 	const authHeader = request.headers.get('Authorization');
 	if (authHeader !== `Bearer ${env.ADMIN_SECRET}`) {
 		return new Response(JSON.stringify({ success: false, error: '未授权' }), {
@@ -34,21 +31,20 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 
 	try {
 		const list = await env.LANDING_KV.list({ prefix: 'merchant:' });
-		const merchants: MerchantConfig[] = [];
+		const merchants: Merchant[] = [];
 
 		for (const key of list.keys) {
-			const data = await env.LANDING_KV.get(key.name, 'json') as MerchantConfig;
+			const data = await env.LANDING_KV.get(key.name, 'json') as Merchant;
 			if (data) merchants.push(data);
 		}
 
-		// 按创建时间倒序
 		merchants.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
 		return new Response(JSON.stringify({ success: true, merchants }), {
 			headers: { 'Content-Type': 'application/json' },
 		});
 	} catch (error) {
-		return new Response(JSON.stringify({ success: false, error: '服务器错误' }), {
+		return new Response(JSON.stringify({ success: false, error: '获取失败' }), {
 			status: 500,
 			headers: { 'Content-Type': 'application/json' },
 		});
@@ -56,10 +52,17 @@ export const onRequestGet: PagesFunction<Env> = async (context) => {
 };
 
 // DELETE: 删除商家
-export const onRequestDelete: PagesFunction<Env> = async (context) => {
-	const { request, env } = context;
+export const DELETE: APIRoute = async ({ request, locals }) => {
+	const runtime = locals.runtime;
+	const env = runtime?.env;
 
-	// 验证管理员密钥
+	if (!env?.LANDING_KV || !env?.ADMIN_SECRET) {
+		return new Response(JSON.stringify({ success: false, error: 'KV 未配置' }), {
+			status: 500,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
+
 	const authHeader = request.headers.get('Authorization');
 	if (authHeader !== `Bearer ${env.ADMIN_SECRET}`) {
 		return new Response(JSON.stringify({ success: false, error: '未授权' }), {
@@ -69,22 +72,21 @@ export const onRequestDelete: PagesFunction<Env> = async (context) => {
 	}
 
 	try {
-		const { merchantId } = await request.json() as { merchantId: string };
-
-		if (!merchantId) {
-			return new Response(JSON.stringify({ success: false, error: '请指定商家 ID' }), {
+		const body = await request.json() as { merchantId?: string };
+		if (!body.merchantId) {
+			return new Response(JSON.stringify({ success: false, error: '缺少商家 ID' }), {
 				status: 400,
 				headers: { 'Content-Type': 'application/json' },
 			});
 		}
 
-		await env.LANDING_KV.delete(`merchant:${merchantId.toLowerCase()}`);
+		await env.LANDING_KV.delete(`merchant:${body.merchantId.toLowerCase()}`);
 
 		return new Response(JSON.stringify({ success: true }), {
 			headers: { 'Content-Type': 'application/json' },
 		});
 	} catch (error) {
-		return new Response(JSON.stringify({ success: false, error: '服务器错误' }), {
+		return new Response(JSON.stringify({ success: false, error: '删除失败' }), {
 			status: 500,
 			headers: { 'Content-Type': 'application/json' },
 		});
