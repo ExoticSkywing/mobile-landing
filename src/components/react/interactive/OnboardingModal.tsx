@@ -374,21 +374,21 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 								<div className="space-y-3">
 									<input
 										type="url"
-										value={socialLinks.instagram}
+										value={socialLinks.instagram || ""}
 										onChange={(e) => setSocialLinks({ ...socialLinks, instagram: e.target.value })}
 										placeholder="Instagram 链接"
 										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
 									/>
 									<input
 										type="url"
-										value={socialLinks.telegram}
+										value={socialLinks.telegram || ""}
 										onChange={(e) => setSocialLinks({ ...socialLinks, telegram: e.target.value })}
 										placeholder="Telegram 链接"
 										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
 									/>
 									<input
 										type="url"
-										value={socialLinks.twitter}
+										value={socialLinks.twitter || ""}
 										onChange={(e) => setSocialLinks({ ...socialLinks, twitter: e.target.value })}
 										placeholder="Twitter/X 链接"
 										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
@@ -601,21 +601,21 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 								<div className="space-y-3">
 									<input
 										type="url"
-										value={socialLinks.instagram}
+										value={socialLinks.instagram || ""}
 										onChange={(e) => setSocialLinks({ ...socialLinks, instagram: e.target.value })}
 										placeholder="Instagram 链接"
 										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
 									/>
 									<input
 										type="url"
-										value={socialLinks.telegram}
+										value={socialLinks.telegram || ""}
 										onChange={(e) => setSocialLinks({ ...socialLinks, telegram: e.target.value })}
 										placeholder="Telegram 链接"
 										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
 									/>
 									<input
 										type="url"
-										value={socialLinks.twitter}
+										value={socialLinks.twitter || ""}
 										onChange={(e) => setSocialLinks({ ...socialLinks, twitter: e.target.value })}
 										placeholder="Twitter/X 链接"
 										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
