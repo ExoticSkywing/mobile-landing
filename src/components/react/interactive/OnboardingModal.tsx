@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FiX, FiCheck, FiCopy, FiLoader, FiArrowRight, FiExternalLink, FiSettings, FiArrowLeft } from "react-icons/fi";
 
 interface ApiResponse {
@@ -18,6 +18,38 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 	const [step, setStep] = useState<Step>("code");
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState("");
+	
+	// Animation states
+	const [isVisible, setIsVisible] = useState(false);
+	const [isAnimating, setIsAnimating] = useState(false);
+	const [stepAnimating, setStepAnimating] = useState(false);
+	const prevStepRef = useRef<Step>("code");
+	
+	// Handle modal open/close animation
+	useEffect(() => {
+		if (isOpen) {
+			setIsVisible(true);
+			requestAnimationFrame(() => {
+				requestAnimationFrame(() => setIsAnimating(true));
+			});
+		} else {
+			setIsAnimating(false);
+			const timer = setTimeout(() => setIsVisible(false), 200);
+			return () => clearTimeout(timer);
+		}
+	}, [isOpen]);
+	
+	// Animated step change
+	const changeStep = (newStep: Step) => {
+		if (newStep === step) return;
+		prevStepRef.current = step;
+		setStepAnimating(true);
+		setTimeout(() => {
+			setStep(newStep);
+			setError("");
+			setTimeout(() => setStepAnimating(false), 50);
+		}, 150);
+	};
 	
 	// Form data
 	const [inviteCode, setInviteCode] = useState("");
@@ -79,7 +111,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 			const data = await res.json() as ApiResponse;
 
 			if (data.success) {
-				setStep("config");
+				changeStep("config");
 			} else {
 				setError(data.error || "验证失败");
 			}
@@ -172,7 +204,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 
 			if (data.success && data.url) {
 				setFinalUrl(data.url);
-				setStep("success");
+				changeStep("success");
 			} else {
 				setError(data.error || "注册失败");
 			}
@@ -201,18 +233,18 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 		}
 	};
 
-	if (!isOpen) return null;
+	if (!isVisible) return null;
 
 	return (
 		<div className="fixed inset-0 z-50 flex items-center justify-center p-4">
 			{/* Backdrop */}
 			<div 
-				className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+				className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${isAnimating ? 'opacity-100' : 'opacity-0'}`}
 				onClick={handleClose}
 			/>
 			
 			{/* Modal */}
-			<div className="relative w-full max-w-md bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden">
+			<div className={`relative w-full max-w-md bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden transition-all duration-200 ${isAnimating ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}>
 				{/* Header */}
 				<div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-white/5">
 					<h2 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -232,7 +264,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 				</div>
 
 				{/* Content */}
-				<div className="p-6">
+				<div className={`p-6 transition-all duration-150 ${stepAnimating ? 'opacity-0 translate-x-2' : 'opacity-100 translate-x-0'}`}>
 					{/* Step 1: 输入邀请码 */}
 					{step === "code" && (
 						<div className="space-y-4">
@@ -272,7 +304,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 							
 							<div className="pt-4 border-t border-gray-100 dark:border-white/5 text-center">
 								<button
-									onClick={() => { setStep("manage-login"); setError(""); }}
+									onClick={() => changeStep("manage-login")}
 									className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
 								>
 									<FiSettings className="w-4 h-4" />
@@ -435,7 +467,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 					{step === "manage-login" && (
 						<div className="space-y-4">
 							<button
-								onClick={() => { setStep("code"); setError(""); setMerchantId(""); setInviteCode(""); }}
+								onClick={() => { changeStep("code"); setMerchantId(""); setInviteCode(""); }}
 								className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
 							>
 								<FiArrowLeft className="w-4 h-4" />
@@ -494,7 +526,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 												telegram: data.config.socialLinks?.telegram || "",
 												twitter: data.config.socialLinks?.twitter || "",
 											});
-											setStep("manage-config");
+											changeStep("manage-config");
 										} else {
 											setError(data.error || "验证失败");
 										}
@@ -615,7 +647,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 										});
 										const data = await res.json() as ApiResponse;
 										if (data.success) {
-											setStep("manage-success");
+											changeStep("manage-success");
 										} else {
 											setError(data.error || "更新失败");
 										}
