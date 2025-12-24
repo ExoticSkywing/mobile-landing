@@ -30,11 +30,14 @@ interface ApiResponse {
 	merchants?: Merchant[];
 }
 
+const STORAGE_KEY = "admin_secret";
+
 export default function AdminPanel() {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [secret, setSecret] = useState("");
 	const [authError, setAuthError] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [initializing, setInitializing] = useState(true);
 	
 	const [activeTab, setActiveTab] = useState<"codes" | "merchants">("codes");
 	const [codes, setCodes] = useState<InviteCode[]>([]);
@@ -45,6 +48,56 @@ export default function AdminPanel() {
 	const authHeaders = {
 		"Content-Type": "application/json",
 		"Authorization": `Bearer ${secret}`,
+	};
+
+	// 页面加载时尝试恢复会话
+	useEffect(() => {
+		const savedSecret = localStorage.getItem(STORAGE_KEY);
+		if (savedSecret) {
+			setSecret(savedSecret);
+			autoLogin(savedSecret);
+		} else {
+			setInitializing(false);
+		}
+	}, []);
+
+	// 自动登录
+	const autoLogin = async (savedSecret: string) => {
+		try {
+			const res = await fetch("/api/admin/invite-codes", {
+				headers: { "Authorization": `Bearer ${savedSecret}` },
+			});
+			if (res.status === 401) {
+				localStorage.removeItem(STORAGE_KEY);
+				setInitializing(false);
+				return;
+			}
+			const data = await res.json() as ApiResponse;
+			if (data.success) {
+				setIsAuthenticated(true);
+				setCodes(data.codes || []);
+				loadMerchantsWithSecret(savedSecret);
+			}
+		} catch {
+			// 网络错误时保留密钥，下次可重试
+		} finally {
+			setInitializing(false);
+		}
+	};
+
+	// 使用指定密钥加载商家
+	const loadMerchantsWithSecret = async (s: string) => {
+		try {
+			const res = await fetch("/api/admin/merchants", { 
+				headers: { "Content-Type": "application/json", "Authorization": `Bearer ${s}` }
+			});
+			const data = await res.json() as ApiResponse;
+			if (data.success) {
+				setMerchants(data.merchants || []);
+			}
+		} catch {
+			console.error("加载商家失败");
+		}
 	};
 
 	// 验证管理员密钥
@@ -64,6 +117,7 @@ export default function AdminPanel() {
 
 			if (res.status === 401) {
 				setAuthError("密钥无效");
+				localStorage.removeItem(STORAGE_KEY);
 				return;
 			}
 
@@ -71,6 +125,7 @@ export default function AdminPanel() {
 			if (data.success) {
 				setIsAuthenticated(true);
 				setCodes(data.codes || []);
+				localStorage.setItem(STORAGE_KEY, secret);
 				// 同时加载商家列表
 				loadMerchants();
 			} else {
@@ -197,6 +252,18 @@ export default function AdminPanel() {
 		});
 	};
 
+	// 初始化中
+	if (initializing) {
+		return (
+			<div className="max-w-md mx-auto mt-20">
+				<div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-xl border border-gray-200 dark:border-white/10 p-8 text-center">
+					<FiLoader className="w-8 h-8 text-violet-600 dark:text-violet-400 animate-spin mx-auto mb-4" />
+					<p className="text-gray-600 dark:text-gray-400">正在恢复会话...</p>
+				</div>
+			</div>
+		);
+	}
+
 	// 未认证界面
 	if (!isAuthenticated) {
 		return (
@@ -248,9 +315,23 @@ export default function AdminPanel() {
 			{/* Header */}
 			<div className="flex items-center justify-between">
 				<h1 className="text-2xl font-bold text-gray-900 dark:text-white">管理后台</h1>
-				<div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-					<div className="w-2 h-2 rounded-full bg-green-500"></div>
-					<span>已认证</span>
+				<div className="flex items-center gap-4">
+					<div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+						<div className="w-2 h-2 rounded-full bg-green-500"></div>
+						<span>已认证</span>
+					</div>
+					<button
+						onClick={() => {
+							localStorage.removeItem(STORAGE_KEY);
+							setIsAuthenticated(false);
+							setSecret("");
+							setCodes([]);
+							setMerchants([]);
+						}}
+						className="text-sm text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+					>
+						退出
+					</button>
 				</div>
 			</div>
 
