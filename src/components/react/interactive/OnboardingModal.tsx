@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiX, FiCheck, FiCopy, FiLoader, FiArrowRight, FiExternalLink } from "react-icons/fi";
+import { FiX, FiCheck, FiCopy, FiLoader, FiArrowRight, FiExternalLink, FiSettings, FiArrowLeft } from "react-icons/fi";
 
 interface ApiResponse {
 	success: boolean;
@@ -12,7 +12,7 @@ interface OnboardingModalProps {
 	onClose: () => void;
 }
 
-type Step = "code" | "config" | "success";
+type Step = "code" | "config" | "success" | "manage-login" | "manage-config" | "manage-success";
 
 export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProps) {
 	const [step, setStep] = useState<Step>("code");
@@ -33,6 +33,13 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 	// Result
 	const [finalUrl, setFinalUrl] = useState("");
 	const [copied, setCopied] = useState(false);
+	
+	// Manage mode - existing merchant config
+	const [existingConfig, setExistingConfig] = useState<{
+		shopUrl: string;
+		supportUrl: string;
+		socialLinks: { instagram?: string; telegram?: string; twitter?: string };
+	} | null>(null);
 
 	const resetForm = () => {
 		setStep("code");
@@ -44,6 +51,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 		setSocialLinks({ instagram: "", telegram: "", twitter: "" });
 		setFinalUrl("");
 		setCopied(false);
+		setExistingConfig(null);
 	};
 
 	const handleClose = () => {
@@ -211,6 +219,9 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 						{step === "code" && "商家入驻"}
 						{step === "config" && "配置信息"}
 						{step === "success" && "入驻成功"}
+						{step === "manage-login" && "管理配置"}
+						{step === "manage-config" && "修改配置"}
+						{step === "manage-success" && "更新成功"}
 					</h2>
 					<button
 						onClick={handleClose}
@@ -258,6 +269,16 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 									</>
 								)}
 							</button>
+							
+							<div className="pt-4 border-t border-gray-100 dark:border-white/5 text-center">
+								<button
+									onClick={() => { setStep("manage-login"); setError(""); }}
+									className="inline-flex items-center gap-1.5 text-sm text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors"
+								>
+									<FiSettings className="w-4 h-4" />
+									<span>已入驻？管理配置</span>
+								</button>
+							</div>
 						</div>
 					)}
 
@@ -407,6 +428,247 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 							<p className="text-xs text-gray-500 dark:text-gray-400">
 								请妥善保管您的邀请码，后续修改配置时需要验证
 							</p>
+						</div>
+					)}
+
+					{/* Manage Step 1: 验证身份 */}
+					{step === "manage-login" && (
+						<div className="space-y-4">
+							<button
+								onClick={() => { setStep("code"); setError(""); setMerchantId(""); setInviteCode(""); }}
+								className="inline-flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
+							>
+								<FiArrowLeft className="w-4 h-4" />
+								<span>返回入驻</span>
+							</button>
+							<p className="text-sm text-gray-600 dark:text-gray-400">
+								请输入您的商家 ID 和邀请码验证身份
+							</p>
+							<div>
+								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+									商家 ID
+								</label>
+								<input
+									type="text"
+									value={merchantId}
+									onChange={(e) => setMerchantId(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))}
+									placeholder="您注册时使用的 ID"
+									className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all"
+								/>
+							</div>
+							<div>
+								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+									邀请码
+								</label>
+								<input
+									type="text"
+									value={inviteCode}
+									onChange={(e) => setInviteCode(e.target.value.toUpperCase())}
+									placeholder="您注册时使用的邀请码"
+									className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all tracking-widest text-center font-mono"
+									maxLength={12}
+								/>
+							</div>
+							{error && (
+								<p className="text-sm text-red-500 dark:text-red-400">{error}</p>
+							)}
+							<button
+								onClick={async () => {
+									if (!merchantId.trim() || !inviteCode.trim()) {
+										setError("请填写商家 ID 和邀请码");
+										return;
+									}
+									setLoading(true);
+									setError("");
+									try {
+										const res = await fetch(`/api/merchant/config?id=${merchantId.trim()}&code=${inviteCode.trim()}`);
+										const data = await res.json() as ApiResponse & { 
+											config?: { shopUrl: string; supportUrl: string; socialLinks?: { instagram?: string; telegram?: string; twitter?: string } } 
+										};
+										if (data.success && data.config) {
+											setExistingConfig(data.config);
+											setShopUrl(data.config.shopUrl);
+											setSupportUrl(data.config.supportUrl);
+											setSocialLinks({
+												instagram: data.config.socialLinks?.instagram || "",
+												telegram: data.config.socialLinks?.telegram || "",
+												twitter: data.config.socialLinks?.twitter || "",
+											});
+											setStep("manage-config");
+										} else {
+											setError(data.error || "验证失败");
+										}
+									} catch {
+										setError("网络错误，请重试");
+									} finally {
+										setLoading(false);
+									}
+								}}
+								disabled={loading}
+								className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium transition-colors"
+							>
+								{loading ? (
+									<FiLoader className="w-5 h-5 animate-spin" />
+								) : (
+									<>
+										<span>验证身份</span>
+										<FiArrowRight className="w-4 h-4" />
+									</>
+								)}
+							</button>
+						</div>
+					)}
+
+					{/* Manage Step 2: 修改配置 */}
+					{step === "manage-config" && (
+						<div className="space-y-4">
+							<div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+								<span>商家：</span>
+								<span className="font-mono text-gray-900 dark:text-white">{merchantId}</span>
+							</div>
+							
+							<div>
+								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+									购买链接
+								</label>
+								<input
+									type="url"
+									value={shopUrl}
+									onChange={(e) => setShopUrl(e.target.value)}
+									placeholder="https://your-shop.com/..."
+									className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all"
+								/>
+							</div>
+
+							<div>
+								<label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+									技术支持链接
+								</label>
+								<input
+									type="url"
+									value={supportUrl}
+									onChange={(e) => setSupportUrl(e.target.value)}
+									placeholder="https://t.me/..."
+									className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all"
+								/>
+							</div>
+
+							<div className="pt-2 border-t border-gray-100 dark:border-white/5">
+								<p className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+									社交链接 <span className="text-gray-400 font-normal">（可选）</span>
+								</p>
+								<div className="space-y-3">
+									<input
+										type="url"
+										value={socialLinks.instagram}
+										onChange={(e) => setSocialLinks({ ...socialLinks, instagram: e.target.value })}
+										placeholder="Instagram 链接"
+										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
+									/>
+									<input
+										type="url"
+										value={socialLinks.telegram}
+										onChange={(e) => setSocialLinks({ ...socialLinks, telegram: e.target.value })}
+										placeholder="Telegram 链接"
+										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
+									/>
+									<input
+										type="url"
+										value={socialLinks.twitter}
+										onChange={(e) => setSocialLinks({ ...socialLinks, twitter: e.target.value })}
+										placeholder="Twitter/X 链接"
+										className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:focus:ring-violet-400 focus:border-transparent transition-all text-sm"
+									/>
+								</div>
+							</div>
+
+							{error && (
+								<p className="text-sm text-red-500 dark:text-red-400">{error}</p>
+							)}
+
+							<button
+								onClick={async () => {
+									if (!shopUrl.trim() || !supportUrl.trim()) {
+										setError("请填写购买链接和技术支持链接");
+										return;
+									}
+									try { new URL(shopUrl); } catch { setError("购买链接格式无效"); return; }
+									try { new URL(supportUrl); } catch { setError("技术支持链接格式无效"); return; }
+									
+									setLoading(true);
+									setError("");
+									try {
+										const res = await fetch("/api/merchant/update", {
+											method: "POST",
+											headers: { "Content-Type": "application/json" },
+											body: JSON.stringify({
+												merchantId: merchantId.trim(),
+												code: inviteCode.trim(),
+												shopUrl: shopUrl.trim(),
+												supportUrl: supportUrl.trim(),
+												socialLinks: {
+													instagram: socialLinks.instagram.trim() || undefined,
+													telegram: socialLinks.telegram.trim() || undefined,
+													twitter: socialLinks.twitter.trim() || undefined,
+												},
+											}),
+										});
+										const data = await res.json() as ApiResponse;
+										if (data.success) {
+											setStep("manage-success");
+										} else {
+											setError(data.error || "更新失败");
+										}
+									} catch {
+										setError("网络错误，请重试");
+									} finally {
+										setLoading(false);
+									}
+								}}
+								disabled={loading}
+								className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium transition-colors"
+							>
+								{loading ? (
+									<FiLoader className="w-5 h-5 animate-spin" />
+								) : (
+									<>
+										<span>保存修改</span>
+										<FiCheck className="w-4 h-4" />
+									</>
+								)}
+							</button>
+						</div>
+					)}
+
+					{/* Manage Step 3: 更新成功 */}
+					{step === "manage-success" && (
+						<div className="space-y-4 text-center">
+							<div className="w-16 h-16 mx-auto rounded-full bg-green-100 dark:bg-green-500/20 flex items-center justify-center">
+								<FiCheck className="w-8 h-8 text-green-600 dark:text-green-400" />
+							</div>
+							<div>
+								<h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
+									配置已更新
+								</h3>
+								<p className="text-sm text-gray-600 dark:text-gray-400">
+									您的商家页面配置已成功更新
+								</p>
+							</div>
+							<a
+								href={`/m/${merchantId}`}
+								target="_blank"
+								rel="noopener noreferrer"
+								className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-violet-600 hover:bg-violet-700 text-white font-medium transition-colors"
+							>
+								<FiExternalLink className="w-4 h-4" />
+								<span>查看页面</span>
+							</a>
+							<button
+								onClick={handleClose}
+								className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 text-gray-700 dark:text-gray-300 font-medium transition-colors"
+							>
+								关闭
+							</button>
 						</div>
 					)}
 				</div>
