@@ -25,47 +25,41 @@ import { FiFileText, FiShield } from "react-icons/fi";
 				{siteConfig.description}
 			</p>
 
-			<div class="flex items-center justify-between">
-				<div class="flex items-center gap-3">
-					{siteConfig.socialLinks.map((link) => (
-						<a
-							href={link.url}
-							target="_blank"
-							rel="noopener noreferrer"
-							class="flex items-center justify-center w-10 h-10 rounded-lg bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 border border-neutral-200/50 dark:border-white/5 hover:scale-105"
-							aria-label={link.label}
-							title={link.label}
-						>
-							<link.icon className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
-						</a>
-					))}
-				</div>
-
-				<div class="flex items-center gap-2 text-sm">
-					<OnboardingTrigger client:load />
-					<span class="text-neutral-400 dark:text-neutral-600">•</span>
+			<div class="flex items-center justify-center gap-4">
+				{siteConfig.socialLinks.map((link) => (
 					<a
-						href="/privacy"
-						class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors font-medium"
+						href={link.url}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="flex items-center justify-center w-10 h-10 rounded-lg bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 border border-neutral-200/50 dark:border-white/5 hover:scale-105"
+						aria-label={link.label}
+						title={link.label}
 					>
-						<FiShield className="w-4 h-4" />
-						<span>Privacy</span>
+						<link.icon className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
 					</a>
-					<span class="text-neutral-400 dark:text-neutral-600">•</span>
-					<a
-						href="/terms"
-						class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors font-medium"
-					>
-						<FiFileText className="w-4 h-4" />
-						<span>Terms</span>
-					</a>
-				</div>
+				))}
 			</div>
 
-			<div class="text-center">
-				<div class="text-sm text-neutral-500 dark:text-neutral-400">
-					&copy; 2024-{new Date().getFullYear()} All rights reserved.
-				</div>
+			<div class="flex items-center justify-center gap-4 text-sm">
+				<OnboardingTrigger client:load />
+				<span class="text-neutral-400 dark:text-neutral-600">•</span>
+				<a
+					href="/privacy"
+					class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors font-medium"
+				>
+					Privacy
+				</a>
+				<span class="text-neutral-400 dark:text-neutral-600">•</span>
+				<a
+					href="/terms"
+					class="text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors font-medium"
+				>
+					Terms
+				</a>
+			</div>
+
+			<div class="text-center text-sm text-neutral-500 dark:text-neutral-400">
+				&copy; 2024-{new Date().getFullYear()} All rights reserved.
 			</div>
 		</div>
 
