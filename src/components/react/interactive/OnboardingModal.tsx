@@ -56,7 +56,7 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 	const [merchantId, setMerchantId] = useState("");
 	const [shopUrl, setShopUrl] = useState("");
 	const [supportUrl, setSupportUrl] = useState("");
-	const [socialLinks, setSocialLinks] = useState({
+	const [socialLinks, setSocialLinks] = useState<{ instagram?: string; telegram?: string; twitter?: string }>({
 		instagram: "",
 		telegram: "",
 		twitter: "",
@@ -193,9 +193,9 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 					shopUrl: shopUrl.trim(),
 					supportUrl: supportUrl.trim(),
 					socialLinks: {
-						instagram: socialLinks.instagram.trim() || undefined,
-						telegram: socialLinks.telegram.trim() || undefined,
-						twitter: socialLinks.twitter.trim() || undefined,
+						instagram: socialLinks.instagram?.trim() || undefined,
+						telegram: socialLinks.telegram?.trim() || undefined,
+						twitter: socialLinks.twitter?.trim() || undefined,
 					},
 				}),
 			});
@@ -244,7 +244,13 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 			/>
 			
 			{/* Modal */}
-			<div className={`relative w-full max-w-md bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden transition-all duration-200 ${isAnimating ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-4'}`}>
+			<div 
+				className={`relative w-full max-w-md bg-white dark:bg-neutral-900 rounded-2xl shadow-2xl border border-gray-200 dark:border-white/10 overflow-hidden transition-all ${
+					isAnimating 
+						? 'opacity-100 scale-100 translate-y-0 duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)]' 
+						: 'opacity-0 scale-90 translate-y-20 duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]'
+				}`}
+			>
 				{/* Header */}
 				<div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-white/5">
 					<h2 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -518,7 +524,10 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 											config?: { shopUrl: string; supportUrl: string; socialLinks?: { instagram?: string; telegram?: string; twitter?: string } } 
 										};
 										if (data.success && data.config) {
-											setExistingConfig(data.config);
+											setExistingConfig({
+												...data.config,
+												socialLinks: data.config.socialLinks || { instagram: "", telegram: "", twitter: "" }
+											});
 											setShopUrl(data.config.shopUrl);
 											setSupportUrl(data.config.supportUrl);
 											setSocialLinks({
@@ -639,9 +648,9 @@ export default function OnboardingModal({ isOpen, onClose }: OnboardingModalProp
 												shopUrl: shopUrl.trim(),
 												supportUrl: supportUrl.trim(),
 												socialLinks: {
-													instagram: socialLinks.instagram.trim() || undefined,
-													telegram: socialLinks.telegram.trim() || undefined,
-													twitter: socialLinks.twitter.trim() || undefined,
+													instagram: socialLinks.instagram?.trim() || undefined,
+													telegram: socialLinks.telegram?.trim() || undefined,
+													twitter: socialLinks.twitter?.trim() || undefined,
 												},
 											}),
 										});
