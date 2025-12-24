@@ -12,7 +12,13 @@ interface Merchant {
 	id: string;
 	shopUrl: string;
 	supportUrl: string;
+	socialLinks?: {
+		instagram?: string;
+		telegram?: string;
+		twitter?: string;
+	};
 	inviteCode: string;
+	registerIp?: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -368,46 +374,83 @@ export default function AdminPanel() {
 
 			{/* 商家面板 */}
 			{activeTab === "merchants" && (
-				<div className="bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-white/10 overflow-hidden">
-					<div className="grid grid-cols-[1fr,1fr,auto,auto] gap-4 px-4 py-3 bg-gray-50 dark:bg-white/5 text-sm font-medium text-gray-600 dark:text-gray-400 border-b border-gray-200 dark:border-white/10">
-						<span>商家 ID</span>
-						<span>购买链接</span>
-						<span>入驻时间</span>
-						<span>操作</span>
-					</div>
-					<div className="divide-y divide-gray-100 dark:divide-white/5">
-						{merchants.length === 0 ? (
-							<div className="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
-								暂无商家入驻
-							</div>
-						) : (
-							merchants.map((item) => (
-								<div key={item.id} className="grid grid-cols-[1fr,1fr,auto,auto] gap-4 px-4 py-3 items-center">
-									<span className="font-mono text-gray-900 dark:text-white">
-										{item.id}
-									</span>
-									<a
-										href={item.shopUrl}
-										target="_blank"
-										rel="noopener noreferrer"
-										className="text-sm text-violet-600 dark:text-violet-400 hover:underline truncate"
-									>
-										{item.shopUrl}
-									</a>
-									<span className="text-sm text-gray-500 dark:text-gray-400">
-										{formatDate(item.createdAt)}
-									</span>
+				<div className="space-y-4">
+					{merchants.length === 0 ? (
+						<div className="bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-white/10 px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+							暂无商家入驻
+						</div>
+					) : (
+						merchants.map((item) => (
+							<div key={item.id} className="bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-white/10 overflow-hidden">
+								{/* 头部：ID 和操作 */}
+								<div className="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-white/5 border-b border-gray-200 dark:border-white/10">
+									<div className="flex items-center gap-3">
+										<span className="font-mono text-lg font-semibold text-gray-900 dark:text-white">
+											{item.id}
+										</span>
+										<span className="px-2 py-0.5 text-xs rounded-full bg-violet-100 dark:bg-violet-500/20 text-violet-700 dark:text-violet-300">
+											{item.inviteCode}
+										</span>
+									</div>
 									<button
 										onClick={() => deleteMerchant(item.id)}
 										className="p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-500/10 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-										title="删除"
+										title="删除商家"
 									>
 										<FiTrash2 className="w-4 h-4" />
 									</button>
 								</div>
-							))
-						)}
-					</div>
+								{/* 详情 */}
+								<div className="px-4 py-3 space-y-2 text-sm">
+									<div className="flex items-start gap-2">
+										<span className="text-gray-500 dark:text-gray-400 w-20 flex-shrink-0">购买链接</span>
+										<a href={item.shopUrl} target="_blank" rel="noopener noreferrer" className="text-violet-600 dark:text-violet-400 hover:underline break-all">
+											{item.shopUrl}
+										</a>
+									</div>
+									<div className="flex items-start gap-2">
+										<span className="text-gray-500 dark:text-gray-400 w-20 flex-shrink-0">技术支持</span>
+										<a href={item.supportUrl} target="_blank" rel="noopener noreferrer" className="text-violet-600 dark:text-violet-400 hover:underline break-all">
+											{item.supportUrl}
+										</a>
+									</div>
+									{item.socialLinks && (item.socialLinks.instagram || item.socialLinks.telegram || item.socialLinks.twitter) && (
+										<div className="flex items-start gap-2">
+											<span className="text-gray-500 dark:text-gray-400 w-20 flex-shrink-0">社交链接</span>
+											<div className="flex flex-wrap gap-2">
+												{item.socialLinks.instagram && (
+													<a href={item.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="px-2 py-0.5 text-xs rounded bg-pink-100 dark:bg-pink-500/20 text-pink-700 dark:text-pink-300 hover:underline">
+														Instagram
+													</a>
+												)}
+												{item.socialLinks.telegram && (
+													<a href={item.socialLinks.telegram} target="_blank" rel="noopener noreferrer" className="px-2 py-0.5 text-xs rounded bg-blue-100 dark:bg-blue-500/20 text-blue-700 dark:text-blue-300 hover:underline">
+														Telegram
+													</a>
+												)}
+												{item.socialLinks.twitter && (
+													<a href={item.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="px-2 py-0.5 text-xs rounded bg-sky-100 dark:bg-sky-500/20 text-sky-700 dark:text-sky-300 hover:underline">
+														Twitter
+													</a>
+												)}
+											</div>
+										</div>
+									)}
+									<div className="flex items-center gap-2 pt-2 border-t border-gray-100 dark:border-white/5 text-xs text-gray-400 dark:text-gray-500">
+										<span>注册 IP: {item.registerIp || '未知'}</span>
+										<span>•</span>
+										<span>入驻: {formatDate(item.createdAt)}</span>
+										{item.updatedAt !== item.createdAt && (
+											<>
+												<span>•</span>
+												<span>更新: {formatDate(item.updatedAt)}</span>
+											</>
+										)}
+									</div>
+								</div>
+							</div>
+						))
+					)}
 				</div>
 			)}
 		</div>

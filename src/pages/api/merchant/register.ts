@@ -17,6 +17,7 @@ interface MerchantConfig {
 		twitter?: string;
 	};
 	inviteCode: string;
+	registerIp: string;
 	createdAt: string;
 	updatedAt: string;
 }
@@ -104,6 +105,11 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
 		}
 
 		const now = new Date().toISOString();
+		
+		// 获取注册 IP
+		const registerIp = request.headers.get('CF-Connecting-IP') 
+			|| request.headers.get('X-Forwarded-For')?.split(',')[0].trim()
+			|| 'unknown';
 
 		// 保存商家配置
 		const merchantConfig: MerchantConfig = {
@@ -112,6 +118,7 @@ export const POST: APIRoute = async ({ request, locals, url }) => {
 			supportUrl,
 			socialLinks: body.socialLinks,
 			inviteCode: code,
+			registerIp,
 			createdAt: now,
 			updatedAt: now,
 		};
