@@ -3,6 +3,7 @@
 
 import { siteConfig } from "@config/site";
 import ThemeToggle from "@react/ui/ThemeToggle";
+import OnboardingTrigger from "@react/interactive/OnboardingTrigger";
 import { FiFileText, FiShield } from "react-icons/fi";
 ---
 
@@ -41,6 +42,8 @@ import { FiFileText, FiShield } from "react-icons/fi";
 				</div>
 
 				<div class="flex items-center gap-2 text-sm">
+					<OnboardingTrigger client:load />
+					<span class="text-neutral-400 dark:text-neutral-600">•</span>
 					<a
 						href="/privacy"
 						class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition-colors font-medium"
@@ -106,6 +109,8 @@ import { FiFileText, FiShield } from "react-icons/fi";
 				</div>
 
 				<div class="flex items-center gap-6">
+					<OnboardingTrigger client:load />
+					<span class="text-neutral-400 dark:text-neutral-600">•</span>
 					<a
 						href="/privacy"
 						class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-white text-sm font-medium"

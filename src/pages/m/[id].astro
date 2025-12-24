@@ -1,0 +1,121 @@
+---
+export const prerender = false;
+
+import AppHero from "@astro/sections/AppHero.astro";
+import AIGalaxy from "@astro/sections/AIGalaxy.astro";
+import AppMatrixShowcase from "@astro/sections/AppMatrixShowcase.astro";
+import ClientDownloads from "@astro/sections/ClientDownloads.astro";
+import GlobalRegions from "@astro/sections/GlobalRegions.astro";
+import FAQ from "@astro/sections/FAQ.astro";
+import Features from "@astro/sections/Features.astro";
+import { faqs } from "@config/faqs";
+import { features } from "@config/features";
+import { reviews } from "@config/reviews";
+import { screenshots } from "@config/screenshots";
+import { siteConfig } from "@config/site";
+import Layout from "@layouts/Layout.astro";
+import Lightbox from "@react/interactive/Lightbox";
+import Reviews from "@react/interactive/Reviews";
+import Screenshots from "@react/interactive/Screenshots";
+
+interface MerchantConfig {
+	id: string;
+	shopUrl: string;
+	supportUrl: string;
+	socialLinks?: {
+		instagram?: string;
+		telegram?: string;
+		twitter?: string;
+	};
+}
+
+const { id } = Astro.params;
+
+// 从 KV 获取商家配置
+let merchantConfig: MerchantConfig | null = null;
+
+try {
+	const runtime = Astro.locals.runtime;
+	if (runtime?.env?.LANDING_KV) {
+		const data = await runtime.env.LANDING_KV.get(`merchant:${id?.toLowerCase()}`, 'json');
+		if (data) {
+			merchantConfig = data as MerchantConfig;
+		}
+	}
+} catch (e) {
+	console.error('Failed to load merchant config:', e);
+}
+
+// 如果商家不存在，返回 404
+if (!merchantConfig) {
+	return Astro.redirect('/404');
+}
+
+// 使用商家配置覆盖默认链接
+const { name: title, subtitle, description, logo, logoCrop } = siteConfig;
+
+const storeLinks = {
+	apple: merchantConfig.shopUrl,
+	google: merchantConfig.supportUrl,
+};
+
+// 构建社交链接
+import {
+	RiInstagramFill,
+	RiTelegram2Fill,
+	RiTwitterXFill,
+} from "react-icons/ri";
+
+const socialLinks = [
+	merchantConfig.socialLinks?.instagram && {
+		url: merchantConfig.socialLinks.instagram,
+		icon: RiInstagramFill,
+		label: "Instagram",
+	},
+	merchantConfig.socialLinks?.telegram && {
+		url: merchantConfig.socialLinks.telegram,
+		icon: RiTelegram2Fill,
+		label: "Telegram",
+	},
+	merchantConfig.socialLinks?.twitter && {
+		url: merchantConfig.socialLinks.twitter,
+		icon: RiTwitterXFill,
+		label: "Twitter",
+	},
+].filter(Boolean);
+
+// 如果没有自定义社交链接，使用默认的（但 URL 设为 #）
+const finalSocialLinks = socialLinks.length > 0 ? socialLinks : siteConfig.socialLinks;
+---
+
+<Layout title={title} description={description}>
+  <main class="min-h-screen max-w-5xl mx-auto px-4 py-8">
+    <AppHero
+      title={title}
+      subtitle={subtitle}
+      description={description}
+      storeLinks={storeLinks}
+      logo={logo}
+      logoCrop={logoCrop}
+    />
+    <AIGalaxy storeLinks={storeLinks} />
+    <div class="mb-16"><Screenshots images={screenshots} client:load /></div>
+    <Features items={features} />
+    <AppMatrixShowcase />
+    <ClientDownloads />
+    <GlobalRegions />
+    <Reviews items={reviews} client:visible />
+    <FAQ items={faqs} />
+  </main>
+</Layout>
+
+<Lightbox images={screenshots} client:load />
+
+<style is:global>
+  .screenshots-scroll {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+  }
+</style>

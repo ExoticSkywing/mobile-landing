@@ -1,0 +1,12 @@
+---
+export const prerender = true;
+
+import Layout from "@layouts/Layout.astro";
+import AdminPanel from "@react/interactive/AdminPanel";
+---
+
+<Layout title="管理后台" description="商家入驻管理">
+	<main class="min-h-screen max-w-4xl mx-auto px-4 py-8">
+		<AdminPanel client:load />
+	</main>
+</Layout>

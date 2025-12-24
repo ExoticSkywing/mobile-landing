@@ -1,4 +1,14 @@
 ---
+import { siteConfig } from "@config/site";
+
+interface Props {
+	storeLinks?: {
+		apple: string;
+		google: string;
+	};
+}
+
+const { storeLinks = siteConfig.storeLinks } = Astro.props;
 ---
 
 <section class="mb-16">
@@ -15,7 +25,7 @@
 					网络优化加速计划
 				</span>
 				<a
-					href="https://xingxy.manyuzo.com"
+					href={storeLinks.apple}
 					target="_blank"
 					rel="noopener noreferrer"
 					class="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold whitespace-nowrap border border-gray-200 bg-white/60 text-gray-900 hover:bg-white transition-colors dark:border-white/10 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"

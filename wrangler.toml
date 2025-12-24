@@ -1,0 +1,12 @@
+name = "mobile-landing"
+compatibility_date = "2024-01-01"
+
+# KV Namespace binding
+[[kv_namespaces]]
+binding = "LANDING_KV"
+id = "YOUR_KV_NAMESPACE_ID"
+# preview_id = "YOUR_PREVIEW_KV_NAMESPACE_ID"
+
+# Environment variables (set in Cloudflare Dashboard for production)
+# [vars]
+# ADMIN_SECRET = "your-admin-secret-key"
