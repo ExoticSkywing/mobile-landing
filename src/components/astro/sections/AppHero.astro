@@ -13,8 +13,11 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Ast
 
 ---
 
-<div class="mb-16 flex flex-col items-center md:items-start md:flex-row gap-8">
-	<div class="flex-shrink-0 md:self-center">
+<div class="mb-16 flex flex-col items-center md:items-start md:flex-row gap-8 relative isolate overflow-hidden min-h-[300px] rounded-3xl p-4 md:p-8 -mx-4 md:mx-0">
+
+	<!-- Purple Flowing Background (Unicorn Studio) -->
+	<div data-us-project="ILgOO23w4wEyPQOKyLO4" class="absolute inset-0 z-0 pointer-events-none" style="opacity: 0.8; mix-blend-mode: lighten; transform: scale(1.5);"></div>
+	<div class="flex-shrink-0 md:self-center relative z-10">
 		{logoCrop ? (
 			<div class="rounded-2xl border border-gray-200/50 dark:border-white/10 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-white/[0.02] dark:to-white/[0.05] p-6 w-[192px] h-[192px] flex items-center justify-center shadow-sm">
 				<img src={logo} alt="App Icon" class="h-40 w-40 rounded-2xl object-cover" />
@@ -30,7 +33,7 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Ast
 		)}
 	</div>
 
-	<div class="flex flex-1 flex-col justify-between text-center md:text-left">
+	<div class="flex flex-1 flex-col justify-between text-center md:text-left relative z-10">
 		<div>
 			<h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-1">{title}</h1>
 			{subtitle && (
@@ -74,3 +77,19 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Ast
 		</div>
 	</div>
 </div>
+
+<!-- Load Unicorn Studio Library for the background effect -->
+<script src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js" is:inline></script>
+<script is:inline>
+  // Ensure UnicornStudio initializes even if the script loads late or DOM is updated
+  document.addEventListener('DOMContentLoaded', () => {
+    const init = () => {
+      if (window.UnicornStudio) {
+        window.UnicornStudio.init();
+      } else {
+        setTimeout(init, 500);
+      }
+    };
+    init();
+  });
+</script>
