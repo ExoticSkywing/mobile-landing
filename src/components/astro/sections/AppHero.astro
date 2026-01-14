@@ -73,7 +73,7 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Ast
 					<span class="font-semibold">流媒体</span>
 				</div>
 				<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-100/80 dark:bg-sky-500/20 border border-sky-200 dark:border-sky-400/30 text-sky-700 dark:text-sky-200 backdrop-blur-md">
-					<img src="/assets/apphero/twitter-x.svg" alt="Social" class="w-3.5 h-3.5 invert-0 dark:invert dark:invert-0" />
+					<img src="/assets/apphero/twitter-x.svg" alt="Social" class="w-3.5 h-3.5 dark:invert" />
 					<span class="font-semibold">全球社交</span>
 				</div>
 			</div>
@@ -91,14 +91,14 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Ast
 				href={storeLinks.apple}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="group flex items-center gap-2 rounded-xl border border-black/5 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] px-4 py-3 hover:bg-white/80 dark:hover:bg-white/[0.08] hover:border-black/10 dark:hover:border-white/20 shadow-sm flex-1 min-w-0 md:flex-initial backdrop-blur-sm transition-all"
+				class="group flex items-center gap-3 rounded-xl border border-black/5 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] px-5 py-3.5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white dark:hover:bg-white/[0.1] hover:border-black/10 dark:hover:border-white/20 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/20 dark:hover:shadow-indigo-500/10 active:scale-95 active:translate-y-0"
 			>
-				<div class="flex items-center justify-center w-6 h-6 flex-shrink-0">
-					<FaCcApplePay className="text-gray-800 dark:text-gray-300 group-hover:scale-110 group-hover:text-black dark:group-hover:text-white w-5 h-5 transition-transform" />
+				<div class="flex items-center justify-center w-8 h-8 rounded-lg bg-black/5 dark:bg-white/10 group-hover:bg-black/10 dark:group-hover:bg-white/20 transition-colors">
+					<FaCcApplePay className="text-gray-900 dark:text-gray-100 w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
 				</div>
-				<span class="text-left min-w-0">
-					<div class="text-[10px] font-medium text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300">立即</div>
-					<div class="text-xs font-semibold tracking-wide text-gray-900 dark:text-white/90 group-hover:text-black dark:group-hover:text-white">加入购物车</div>
+				<span class="text-left min-w-0 flex flex-col">
+					<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Get it now</span>
+					<span class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-300 transition-colors">加入购物车</span>
 				</span>
 			</a>
 
@@ -106,14 +106,14 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Ast
 				href={storeLinks.google}
 				target="_blank"
 				rel="noopener noreferrer"
-				class="group flex items-center gap-2 rounded-xl border border-black/5 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] px-4 py-3 hover:bg-white/80 dark:hover:bg-white/[0.08] hover:border-black/10 dark:hover:border-white/20 shadow-sm flex-1 min-w-0 md:flex-initial backdrop-blur-sm transition-all"
+				class="group flex items-center gap-3 rounded-xl border border-black/5 dark:border-white/10 bg-white/60 dark:bg-white/[0.04] px-5 py-3.5 shadow-sm backdrop-blur-sm transition-all duration-300 hover:bg-white dark:hover:bg-white/[0.1] hover:border-black/10 dark:hover:border-white/20 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/20 dark:hover:shadow-cyan-500/10 active:scale-95 active:translate-y-0"
 			>
-				<div class="flex items-center justify-center w-6 h-6 flex-shrink-0">
-					<BiSupport className="text-gray-800 dark:text-gray-300 group-hover:scale-110 group-hover:text-black dark:group-hover:text-white w-4 h-4 transition-transform" />
+				<div class="flex items-center justify-center w-8 h-8 rounded-lg bg-black/5 dark:bg-white/10 group-hover:bg-black/10 dark:group-hover:bg-white/20 transition-colors">
+					<BiSupport className="text-gray-900 dark:text-gray-100 w-5 h-5 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" />
 				</div>
-				<span class="text-left min-w-0">
-					<div class="text-[10px] font-medium text-gray-500 dark:text-gray-400 group-hover:text-gray-700 dark:group-hover:text-gray-300">有问题</div>
-					<div class="text-xs font-semibold tracking-wide text-gray-900 dark:text-white/90 group-hover:text-black dark:group-hover:text-white">请求技术支持</div>
+				<span class="text-left min-w-0 flex flex-col">
+					<span class="text-[10px] font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Support</span>
+					<span class="text-sm font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">请求技术支持</span>
 				</span>
 			</a>
 		</div>
