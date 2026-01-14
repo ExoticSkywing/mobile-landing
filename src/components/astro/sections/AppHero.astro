@@ -5,6 +5,7 @@
 import { FaAlipay, FaGooglePlay } from "react-icons/fa";
 import { FaCcApplePay } from "react-icons/fa6";
 import { BiSupport } from "react-icons/bi";
+import RatingStars from "../../ui/RatingStars";
 import type { AppHeroProps } from "@/types/app";
 
 interface Props extends AppHeroProps {}
@@ -35,7 +36,30 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false } = Ast
 
 	<div class="flex flex-1 flex-col justify-between text-center md:text-left relative z-10">
 		<div>
-			<h1 class="text-4xl font-bold text-white mb-1">{title}</h1>
+			<h1 class="text-4xl font-bold text-white mb-2">{title}</h1>
+			
+			<div class="flex items-center gap-3 mb-4 justify-center md:justify-start flex-wrap">
+				<div class="flex items-center gap-1.5">
+					<RatingStars rating={5.0} />
+					<span class="text-sm font-medium text-gray-300 ml-1">· 1.2K ratings</span>
+				</div>
+			</div>
+
+			<div class="flex items-center gap-2 mb-6 justify-center md:justify-start flex-wrap text-xs">
+				<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200 backdrop-blur-md">
+					<img src="/assets/apphero/gemini-color.svg" alt="AI" class="w-4 h-4" />
+					<span class="font-semibold">AI</span>
+				</div>
+				<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/20 border border-pink-400/30 text-pink-200 backdrop-blur-md">
+					<img src="/assets/apphero/youtube.svg" alt="Streaming" class="w-4 h-4" />
+					<span class="font-semibold">流媒体</span>
+				</div>
+				<div class="flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/20 border border-sky-400/30 text-sky-200 backdrop-blur-md">
+					<img src="/assets/apphero/twitter-x.svg" alt="Social" class="w-3.5 h-3.5 invert dark:invert-0" />
+					<span class="font-semibold">全球社交</span>
+				</div>
+			</div>
+
 			{subtitle && (
 				<p class="text-lg font-semibold text-gray-200 mb-2">
 					{subtitle}

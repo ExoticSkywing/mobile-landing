@@ -12,6 +12,60 @@
 			</p>
 		</div>
 
+		<!-- World Map with Node Animations -->
+		<div class="relative my-8 overflow-hidden rounded-2xl">
+			<!-- Light Mode Map -->
+			<img
+				src="/assets/map/world-light.svg"
+				alt="全球节点覆盖地图"
+				class="w-full h-auto dark:hidden select-none pointer-events-none"
+				loading="lazy"
+			/>
+			<!-- Dark Mode Map -->
+			<img
+				src="/assets/map/world-dark.svg"
+				alt="全球节点覆盖地图"
+				class="w-full h-auto hidden dark:block select-none pointer-events-none"
+				loading="lazy"
+			/>
+
+			<!-- Animated Node Points -->
+			<div class="absolute inset-0 pointer-events-none">
+				<!-- Hong Kong -->
+				<span class="node-dot" style="left: 81%; top: 52%;"></span>
+				<!-- Japan -->
+				<span class="node-dot" style="left: 87%; top: 42%;"></span>
+				<!-- Singapore -->
+				<span class="node-dot" style="left: 77%; top: 62%;"></span>
+				<!-- USA West -->
+				<span class="node-dot" style="left: 15%; top: 40%;"></span>
+				<!-- USA East -->
+				<span class="node-dot" style="left: 24%; top: 42%;"></span>
+				<!-- UK -->
+				<span class="node-dot" style="left: 47%; top: 32%;"></span>
+				<!-- Germany -->
+				<span class="node-dot" style="left: 50%; top: 34%;"></span>
+				<!-- Australia -->
+				<span class="node-dot" style="left: 85%; top: 78%;"></span>
+				<!-- Brazil -->
+				<span class="node-dot" style="left: 32%; top: 70%;"></span>
+				<!-- India -->
+				<span class="node-dot" style="left: 70%; top: 50%;"></span>
+				<!-- South Korea -->
+				<span class="node-dot" style="left: 84%; top: 42%;"></span>
+				<!-- France -->
+				<span class="node-dot" style="left: 48%; top: 36%;"></span>
+				<!-- Netherlands -->
+				<span class="node-dot" style="left: 49%; top: 32%;"></span>
+				<!-- Canada -->
+				<span class="node-dot" style="left: 18%; top: 30%;"></span>
+				<!-- Iceland -->
+				<span class="node-dot" style="left: 40%; top: 22%;"></span>
+				<!-- Egypt -->
+				<span class="node-dot" style="left: 55%; top: 50%;"></span>
+			</div>
+		</div>
+
 		<div class="grid grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
 			{[
 				{ code: "hk", name: "香港" },
@@ -64,3 +118,72 @@
 		</div>
 	</div>
 </section>
+
+<style is:global>
+	.node-dot {
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: #22c55e;
+		box-shadow: 0 0 8px 2px rgba(34, 197, 94, 0.6);
+		transform: translate(-50%, -50%);
+		animation: node-pulse 2s ease-in-out infinite;
+	}
+
+	.node-dot::before {
+		content: '';
+		position: absolute;
+		inset: -4px;
+		border-radius: 50%;
+		background: rgba(34, 197, 94, 0.3);
+		animation: node-ripple 2s ease-out infinite;
+	}
+
+	/* Stagger animations for natural effect */
+	.node-dot:nth-child(2n) { animation-delay: 0.3s; }
+	.node-dot:nth-child(3n) { animation-delay: 0.6s; }
+	.node-dot:nth-child(4n) { animation-delay: 0.9s; }
+	.node-dot:nth-child(5n) { animation-delay: 1.2s; }
+
+	@keyframes node-pulse {
+		0%, 100% {
+			transform: translate(-50%, -50%) scale(1);
+			opacity: 1;
+		}
+		50% {
+			transform: translate(-50%, -50%) scale(1.2);
+			opacity: 0.8;
+		}
+	}
+
+	@keyframes node-ripple {
+		0% {
+			transform: scale(1);
+			opacity: 0.6;
+		}
+		100% {
+			transform: scale(2.5);
+			opacity: 0;
+		}
+	}
+
+	/* Dark mode - brighter nodes */
+	.dark .node-dot {
+		background: #4ade80;
+		box-shadow: 0 0 12px 3px rgba(74, 222, 128, 0.7);
+	}
+
+	.dark .node-dot::before {
+		background: rgba(74, 222, 128, 0.4);
+	}
+
+	/* Reduced motion preference */
+	@media (prefers-reduced-motion: reduce) {
+		.node-dot,
+		.node-dot::before {
+			animation: none;
+		}
+	}
+</style>
+
