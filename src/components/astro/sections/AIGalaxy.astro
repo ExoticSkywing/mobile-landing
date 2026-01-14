@@ -157,6 +157,8 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 		margin: 0 auto;
 		isolation: isolate;
 		overflow: hidden;
+		content-visibility: auto; /* Optimization: Skips rendering off-screen */
+		contain-intrinsic-size: 520px; /* Placeholder size to prevent scroll jump */
 		--ai-planet-scale: 0.75;
 		--ai-core-size: 58px;
 		--ai-core-ring-size: 345px;
@@ -496,8 +498,10 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 				entries.forEach(entry => {
 					if (entry.isIntersecting) {
 						galaxy.classList.add('is-visible');
+						galaxy.style.visibility = 'visible'; // Force paint ON
 					} else {
 						galaxy.classList.remove('is-visible');
+						galaxy.style.visibility = 'hidden'; // Force paint OFF
 					}
 				});
 			},
