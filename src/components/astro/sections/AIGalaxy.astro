@@ -464,4 +464,49 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 			animation: none;
 		}
 	}
+
+	/* === Visibility-based Animation Activation === */
+	/* Pause animations by default to avoid off-screen render cost */
+	.ai-orbit-1,
+	.ai-orbit-2,
+	.ai-orbit-3,
+	.ai-galaxy-center-glow,
+	.ai-galaxy-center-shimmer {
+		animation-play-state: paused;
+	}
+
+	/* Activate animations only when galaxy is visible */
+	.ai-galaxy.is-visible .ai-orbit-1,
+	.ai-galaxy.is-visible .ai-orbit-2,
+	.ai-galaxy.is-visible .ai-orbit-3,
+	.ai-galaxy.is-visible .ai-galaxy-center-glow,
+	.ai-galaxy.is-visible .ai-galaxy-center-shimmer {
+		animation-play-state: running;
+	}
 </style>
+
+<script is:inline>
+	// Intersection Observer to activate AIGalaxy animations only when visible
+	(function() {
+		const galaxy = document.querySelector('.ai-galaxy');
+		if (!galaxy) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						galaxy.classList.add('is-visible');
+					} else {
+						galaxy.classList.remove('is-visible');
+					}
+				});
+			},
+			{
+				rootMargin: '100px', // Start animation slightly before fully in view
+				threshold: 0.1
+			}
+		);
+
+		observer.observe(galaxy);
+	})();
+</script>
