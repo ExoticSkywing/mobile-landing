@@ -20,6 +20,7 @@ import Layout from "@layouts/Layout.astro";
 import Lightbox from "@react/interactive/Lightbox";
 import Reviews from "@react/interactive/Reviews";
 import Screenshots from "@react/interactive/Screenshots";
+import StickyBottomCTA from "@astro/ui/StickyBottomCTA.astro";
 
 const { name: title, subtitle, description, storeLinks, logo, logoCrop } = siteConfig;
 ---
@@ -46,6 +47,48 @@ const { name: title, subtitle, description, storeLinks, logo, logoCrop } = siteC
 </Layout>
 
 <Lightbox images={screenshots} client:load />
+<StickyBottomCTA />
+
+<script is:inline>
+  // Visibility Logic:
+  // Show Sticky CTA when: 
+  // 1. User scrolls past Hero
+  // 2. User has NOT reached the Footer (to prevent blocking links)
+  
+  const cta = document.getElementById('sticky-cta');
+  const hero = document.querySelector('div.mb-16'); // AppHero wrapper
+  const footer = document.querySelector('footer'); // Target the footer element
+
+  if (cta && hero) {
+    let isHeroVisible = true;
+    let isFooterVisible = false;
+
+    const updateVisibility = () => {
+      if (!isHeroVisible && !isFooterVisible) {
+        cta.classList.add('is-visible');
+      } else {
+        cta.classList.remove('is-visible');
+      }
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.target === hero) {
+          isHeroVisible = entry.isIntersecting;
+        }
+        if (entry.target === footer) {
+          isFooterVisible = entry.isIntersecting;
+        }
+      });
+      updateVisibility();
+    };
+
+    const observer = new IntersectionObserver(observerCallback, { threshold: 0.1 }); // 10% visibility trigger
+    
+    observer.observe(hero);
+    if (footer) observer.observe(footer);
+  }
+</script>
 
 <style is:global>
   .screenshots-scroll {
