@@ -16,7 +16,8 @@ import { IoLogoYoutube } from "react-icons/io5";
     
     <!-- Shared Coordinate Space Container - SCROLL WRAPPER FOR MOBILE -->
     <!-- Fix: Force min-width on mobile to prevent squashing/overlapping -->
-    <div class="w-full overflow-x-auto overflow-y-hidden pb-6 md:pb-0 hide-scrollbar mask-fade-right">
+    <!-- Desktop Fix: md:overflow-visible to prevent clipping of extended tags -->
+    <div class="w-full overflow-x-auto overflow-y-hidden md:overflow-visible pb-6 md:pb-0 hide-scrollbar mask-fade-right">
         <div class="relative min-w-[850px] md:min-w-0 w-full h-[320px]">
         
         <!-- SVG Layer for Connections -->
@@ -47,15 +48,16 @@ import { IoLogoYoutube } from "react-icons/io5";
             <!-- Leg 1: Device (10, 50) to Chip (30, 50) -->
             <path id="ir-path-1" d="M 10 50 L 30 50" stroke="url(#ir-grad-green)" stroke-width="0.3" fill="none" stroke-dasharray="1 1" class="opacity-60" vector-effect="non-scaling-stroke" />
 
-            <!-- Leg 2: Chip (30, 50) to Stack (55, [20, 50, 80]) -->
-            <path id="ir-path-2-top" d="M 30 50 C 40 50, 45 20, 55 20" stroke="url(#ir-grad-purple)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
-            <path id="ir-path-2-mid" d="M 30 50 L 55 50" stroke="url(#ir-grad-purple)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
-            <path id="ir-path-2-bot" d="M 30 50 C 40 50, 45 80, 55 80" stroke="url(#ir-grad-purple)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
+            <!-- Leg 2: Chip (30, 50) to Stack (50, [20, 50, 80]) -->
+            <path id="ir-path-2-top" d="M 30 50 C 36 50, 44 20, 50 20" stroke="url(#ir-grad-purple)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
+            <path id="ir-path-2-mid" d="M 30 50 L 50 50" stroke="url(#ir-grad-purple)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
+            <path id="ir-path-2-bot" d="M 30 50 C 36 50, 44 80, 50 80" stroke="url(#ir-grad-purple)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
 
-            <!-- Leg 3: Stack (55, [20, 50, 80]) to Rocket (85, 50) -->
-            <path id="ir-path-3-top" d="M 55 20 C 65 20, 75 50, 85 50" stroke="url(#ir-grad-blue)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
-            <path id="ir-path-3-mid" d="M 55 50 L 85 50" stroke="url(#ir-grad-blue)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
-            <path id="ir-path-3-bot" d="M 55 80 C 65 80, 75 50, 85 50" stroke="url(#ir-grad-blue)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
+            <!-- Leg 3: Stack (50, [20, 50, 80]) to Rocket (80, 50) -->
+            <!-- Adjusted end point to 80 to give more space on right -->
+            <path id="ir-path-3-top" d="M 50 20 C 60 20, 70 50, 80 50" stroke="url(#ir-grad-blue)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
+            <path id="ir-path-3-mid" d="M 50 50 L 80 50" stroke="url(#ir-grad-blue)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
+            <path id="ir-path-3-bot" d="M 50 80 C 60 80, 70 50, 80 50" stroke="url(#ir-grad-blue)" stroke-width="0.3" fill="none" class="opacity-50" vector-effect="non-scaling-stroke" />
 
             <!-- === P U L S E S === -->
             <!-- Reduced radius to minimize aspect ratio distortion effects -->
@@ -97,13 +99,13 @@ import { IoLogoYoutube } from "react-icons/io5";
             </circle>
             <circle r="0.6" fill="#06b6d4" filter="url(#ir-glow)">
                 <animateMotion dur="2s" begin="1.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.7 0 1 0.3">
-                     <mpath href="#ir-path-3-bot" />
+                    <mpath href="#ir-path-3-bot" />
                 </animateMotion>
             </circle>
 
-            <!-- SHOCKWAVE RIPPLE at Destination (85, 50) -->
+            <!-- SHOCKWAVE RIPPLE at Destination (80, 50) -->
             <!-- Triggered every 2s to match the pulse arrival -->
-            <circle cx="85" cy="50" r="0" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0">
+            <circle cx="80" cy="50" r="0" fill="none" stroke="#22d3ee" stroke-width="2" opacity="0">
                 <animate attributeName="r" from="0" to="18" dur="2s" begin="1s" repeatCount="indefinite" /> <!-- Syncs with Pulse 1 impact -->
                 <animate attributeName="opacity" values="1;0" keyTimes="0;1" dur="2s" begin="1s" repeatCount="indefinite" />
                 <animate attributeName="stroke-width" from="2" to="0" dur="2s" begin="1s" repeatCount="indefinite" />
@@ -142,7 +144,7 @@ import { IoLogoYoutube } from "react-icons/io5";
         <!-- Col 3: Stack (Top: 20%, Mid: 50%, Bot: 80%) -->
         <!-- GROUP AURA CONTAINER for "Inhale Phase" -->
         <!-- Positioned to wrap the 3 items: 20% to 80% is approx 192px height. -->
-        <div class="absolute top-[50%] left-[55%] -translate-x-1/2 -translate-y-1/2 w-24 h-[240px] pointer-events-none z-0">
+        <div class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-24 h-[240px] pointer-events-none z-0">
              <!-- The Aura Border (Base) -->
             <div class="absolute inset-0 rounded-[3rem] border border-cyan-400/20 dark:border-cyan-500/30 bg-gradient-to-b from-violet-500/5 via-cyan-500/5 to-blue-500/5 shadow-[0_0_40px_rgba(34,211,238,0.1)]"></div>
             
@@ -161,31 +163,31 @@ import { IoLogoYoutube } from "react-icons/io5";
              <div class="absolute inset-x-0 bottom-[10%] h-[1px] bg-gradient-to-r from-transparent via-blue-400/30 to-transparent animate-[ping_3s_linear_infinite_reverse]"></div>
         </div>
 
-        <div class="absolute top-0 left-[55%] -translate-x-1/2 text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 mt-2 pointer-events-auto">
+        <div class="absolute top-0 left-[50%] -translate-x-1/2 text-xs font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 to-fuchsia-400 mt-2 pointer-events-auto">
             智能分流
         </div>
 
         <!-- Stack 1: Gemini (20%) -->
-        <div class="absolute top-[20%] left-[55%] -translate-x-1/2 -translate-y-1/2 group z-20 pointer-events-auto">
+        <div class="absolute top-[20%] left-[50%] -translate-x-1/2 -translate-y-1/2 group z-20 pointer-events-auto">
             <div class="w-12 h-12 bg-white/40 dark:bg-white/5 backdrop-blur-sm rounded-xl border border-white/40 dark:border-white/10 flex items-center justify-center transform group-hover:scale-125 transition-transform duration-300 shadow-[0_0_15px_rgba(255,255,255,0.1)]">
                <img src="/assets/ai/gemini.svg" class="w-7 h-7 opacity-90" />
             </div>
         </div>
         <!-- Stack 2: YouTube (50%) -->
-        <div class="absolute top-[50%] left-[55%] -translate-x-1/2 -translate-y-1/2 group z-20 pointer-events-auto">
+        <div class="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 group z-20 pointer-events-auto">
             <div class="w-14 h-14 bg-red-600/10 backdrop-blur-sm rounded-xl border border-red-500/20 flex items-center justify-center transform group-hover:scale-125 transition-transform duration-300 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
                  <IoLogoYoutube className="w-8 h-8 text-red-500" />
             </div>
         </div>
         <!-- Stack 3: X (80%) -->
-        <div class="absolute top-[80%] left-[55%] -translate-x-1/2 -translate-y-1/2 group z-20 pointer-events-auto">
+        <div class="absolute top-[80%] left-[50%] -translate-x-1/2 -translate-y-1/2 group z-20 pointer-events-auto">
             <div class="w-12 h-12 bg-white/40 dark:bg-white/5 backdrop-blur-sm rounded-xl border border-gray-400/30 dark:border-white/10 flex items-center justify-center transform group-hover:scale-125 transition-transform duration-300 shadow-[0_0_15px_rgba(0,0,0,0.1)]">
                  <FaXTwitter className="w-6 h-6 text-gray-900 dark:text-white" />
             </div>
         </div>
 
         <!-- Col 4: Surfing (Center Y: 50%) -->
-         <div class="absolute top-1/2 left-[85%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
+         <div class="absolute top-1/2 left-[80%] -translate-x-1/2 -translate-y-1/2 pointer-events-auto">
             <div class="relative group">
                 <!-- significantly larger container for the final node -->
                  <!-- Added custom-throb animation class -->
@@ -213,7 +215,7 @@ import { IoLogoYoutube } from "react-icons/io5";
                     </div>
 
                     <!-- Tag 3: High Speed (Bottom Right) - HERO TAG (Largest) -->
-                    <div class="absolute bottom-4 -right-10 animate-[float_3.5s_ease-in-out_infinite]" style="animation-delay: 0.5s;">
+                    <div class="absolute bottom-4 -right-8 animate-[float_3.5s_ease-in-out_infinite]" style="animation-delay: 0.5s;">
                         <div class="px-4 py-1.5 bg-white dark:bg-slate-900 border border-teal-200 dark:border-teal-400/80 rounded-xl text-base text-teal-700 dark:text-teal-300 font-extrabold whitespace-nowrap shadow-teal-500/40 shadow-xl backdrop-blur-md tracking-wide transform scale-110">
                             高速
                         </div>
@@ -237,10 +239,22 @@ import { IoLogoYoutube } from "react-icons/io5";
 </div>
 
 
-<!-- Mobile Scroll Hint Overlay -->
-<!-- Gradient removed to prevent "black patch" issue -->
 
-<!-- 2. Animated Hint Badge (Relocated to bottom-right in padding area) -->
+<!-- Mobile Scroll Hint Overlay -->
+<!-- Re-added Gradient Mask: Shadow in Light Mode, Glow in Dark Mode -->
+<div class="absolute right-0 top-0 bottom-0 w-20 pointer-events-none md:hidden z-20 bg-gradient-to-l from-gray-950/30 to-transparent dark:from-white/10"></div>
+
+
+<!-- 2. Animated Hint Badges (Top-Right and Bottom-Right) -->
+<!-- Top Right Badge -->
+<div class="absolute right-4 top-4 md:hidden pointer-events-none z-30 flex items-center justify-center animate-[pulse_3s_infinite]">
+    <div class="flex items-center gap-1.5 bg-black/40 backdrop-blur-md border border-white/10 rounded-full pl-3 pr-2 py-1.5 shadow-lg">
+        <span class="text-[10px] font-medium text-cyan-300 whitespace-nowrap tracking-wider">滑动查看更多</span>
+        <FaChevronRight className="w-3 h-3 text-cyan-300 animate-[bounce-right_1s_infinite]" />
+    </div>
+</div>
+
+<!-- Bottom Right Badge -->
 <div class="absolute right-4 bottom-4 md:hidden pointer-events-none z-30 flex items-center justify-center animate-[pulse_3s_infinite]">
     <div class="flex items-center gap-1.5 bg-black/40 backdrop-blur-md border border-white/10 rounded-full pl-3 pr-2 py-1.5 shadow-lg">
         <span class="text-[10px] font-medium text-cyan-300 whitespace-nowrap tracking-wider">滑动查看更多</span>
