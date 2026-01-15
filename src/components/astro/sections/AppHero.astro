@@ -84,10 +84,13 @@ const { title, subtitle, description, storeLinks, logo, logoCrop = false, offici
 					href={officialSite} 
 					target="_blank" 
 					rel="noopener noreferrer"
-					class="inline-flex items-center gap-1.5 text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group/subtitle"
+					class="inline-flex items-center gap-2 text-lg font-semibold text-gray-700 dark:text-gray-200 mb-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors group/subtitle"
 				>
 					{subtitle}
-					<MdVerified className="w-5 h-5 text-blue-500 animate-pulse" />
+					<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-500/30 border border-blue-100 dark:border-blue-400/40 text-[10px] sm:text-xs font-medium text-blue-600 dark:text-blue-200 opacity-90 group-hover/subtitle:opacity-100 transition-opacity whitespace-nowrap">
+						<MdVerified className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
+						官方网站
+					</span>
 				</a>
 			)}
 			<p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed mb-6 max-w-2xl mx-auto md:mx-0">{description}</p>
