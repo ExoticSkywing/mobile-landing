@@ -14,8 +14,10 @@ import { IoLogoYoutube } from "react-icons/io5";
     
 <div class="relative w-full max-w-5xl mx-auto py-12 md:py-20 select-none">
     
-    <!-- Shared Coordinate Space Container -->
-    <div class="relative w-full h-[320px]">
+    <!-- Shared Coordinate Space Container - SCROLL WRAPPER FOR MOBILE -->
+    <!-- Fix: Force min-width on mobile to prevent squashing/overlapping -->
+    <div class="w-full overflow-x-auto overflow-y-hidden pb-6 md:pb-0 hide-scrollbar mask-fade-right">
+        <div class="relative min-w-[850px] md:min-w-0 w-full h-[320px]">
         
         <!-- SVG Layer for Connections -->
         <!-- viewBox 0 0 100 100 with preserveAspectRatio="none" stretches to fill the container perfectly -->
@@ -233,6 +235,7 @@ import { IoLogoYoutube } from "react-icons/io5";
 
 </div>
 </div>
+</div>
 
 <style>
 @keyframes throb {
@@ -243,5 +246,22 @@ import { IoLogoYoutube } from "react-icons/io5";
 @keyframes float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-6px); }
+}
+
+/* Base utilities */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Mobile fade mask to indicate scrollability */
+@media (max-width: 768px) {
+    .mask-fade-right {
+        mask-image: linear-gradient(to right, black 90%, transparent 100%);
+        -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+    }
 }
 </style>
