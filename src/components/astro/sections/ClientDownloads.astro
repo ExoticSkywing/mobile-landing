@@ -22,7 +22,7 @@ import { FaWindows } from "react-icons/fa";
 
 		<div class="grid gap-4 md:grid-cols-3 md:grid-rows-2">
 			<div
-				class="group relative overflow-hidden rounded-2xl border border-white/60 bg-gradient-to-r from-violet-400 to-sky-400 text-white md:row-span-2 p-6 flex flex-col justify-between dark:border-white/20 dark:from-violet-500 dark:to-sky-500 transition-transform duration-500 hover:shadow-lg hover:shadow-violet-500/20"
+				class="group relative overflow-hidden rounded-3xl border border-white/40 bg-gradient-to-br from-violet-500/90 to-fuchsia-500/90 text-white md:row-span-2 p-8 flex flex-col justify-between dark:border-white/10 dark:from-violet-600/90 dark:to-fuchsia-600/90 shadow-lg shadow-violet-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-violet-500/40"
 			>
 				<img
 					src="/assets/screenshots/iPhone-17-Pro-Max---Mockup.webp"
@@ -57,7 +57,7 @@ import { FaWindows } from "react-icons/fa";
 			</div>
 
 			<div
-				class="group relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-br from-slate-50 to-slate-200 text-gray-900/90 md:col-span-2 p-6 flex flex-col justify-between dark:border-white/15 dark:from-white/10 dark:to-white/20 transition-transform duration-500 hover:shadow-lg hover:shadow-slate-500/10"
+				class="group relative overflow-hidden rounded-3xl border border-white/60 bg-gradient-to-br from-slate-100 to-slate-200 text-gray-900 md:col-span-2 p-8 flex flex-col justify-between dark:border-white/10 dark:bg-none dark:bg-white/[0.08] dark:text-white shadow-lg shadow-gray-200/50 dark:shadow-none transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-gray-300/50 dark:hover:bg-white/[0.12]"
 			>
 				<img
 					src="/assets/screenshots/New-MacBook-Pro-16-Inch-Mockup.175k6vxoc2.webp"
@@ -102,20 +102,20 @@ import { FaWindows } from "react-icons/fa";
 			</div>
 
 			<div
-				class="rounded-2xl border border-emerald-200/70 bg-gradient-to-r from-emerald-400 to-lime-400 text-gray-900 p-6 flex flex-col justify-between dark:border-emerald-300/20 dark:from-emerald-500 dark:to-lime-500"
+				class="group rounded-3xl border border-emerald-200/50 bg-gradient-to-br from-emerald-400 to-teal-500 text-white p-8 flex flex-col justify-between dark:border-emerald-500/20 dark:from-emerald-600/90 dark:to-teal-600/90 shadow-lg shadow-emerald-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-emerald-500/30"
 			>
 				<div class="flex items-start justify-between mb-4">
 					<div>
-						<p class="text-xs uppercase tracking-[0.18em] text-emerald-900/80">Android</p>
-						<p class="text-base font-semibold">Android 客戶端</p>
-						<p class="text-xs mt-1 text-emerald-900/80">華為 / 小米 / OPPO 等全系</p>
+						<p class="text-xs uppercase tracking-[0.18em] text-white/90">Android</p>
+						<p class="text-xl font-bold">Android 客戶端</p>
+						<p class="text-xs mt-1 text-white/80">華為 / 小米 / OPPO 等全系</p>
 					</div>
-					<div class="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-900/10">
-						<SiAndroid className="h-5 w-5 text-emerald-900" />
+					<div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+						<SiAndroid className="h-6 w-6 text-white" />
 					</div>
 				</div>
 				<div class="mt-auto flex items-center justify-between">
-					<p class="text-xs text-emerald-900/80">隨時隨地連接，移動場景優先</p>
+					<p class="text-xs text-white/80 font-medium">隨時隨地連接，移動場景優先</p>
 					<a
 						href="https://wiki.manyuzo.com/cutting-edge-tech/02.%E5%9B%BD%E9%99%85%E7%BD%91%E7%BB%9C%E5%86%B2%E6%B5%AA/01.%F0%9F%8D%85%E5%B7%A5%E5%85%B7/android/download"
 						target="_blank"
@@ -128,20 +128,20 @@ import { FaWindows } from "react-icons/fa";
 			</div>
 
 			<div
-				class="rounded-2xl border border-sky-200/70 bg-gradient-to-r from-sky-400 to-cyan-400 text-gray-900 p-6 flex flex-col justify-between dark:border-sky-300/20 dark:from-sky-500 dark:to-cyan-500"
+				class="group rounded-3xl border border-sky-200/50 bg-gradient-to-br from-sky-400 to-blue-500 text-white p-8 flex flex-col justify-between dark:border-sky-500/20 dark:from-sky-600/90 dark:to-blue-600/90 shadow-lg shadow-sky-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-sky-500/30"
 			>
 				<div class="flex items-start justify-between mb-4">
 					<div>
-						<p class="text-xs uppercase tracking-[0.18em] text-sky-900/80">Windows</p>
-						<p class="text-base font-semibold">Windows 客戶端</p>
-						<p class="text-xs mt-1 text-sky-900/80">32 / 64 位全系支持</p>
+						<p class="text-xs uppercase tracking-[0.18em] text-white/90">Windows</p>
+						<p class="text-xl font-bold">Windows 客戶端</p>
+						<p class="text-xs mt-1 text-white/80">32 / 64 位全系支持</p>
 					</div>
-					<div class="flex h-9 w-9 items-center justify-center rounded-full bg-sky-900/10">
-						<FaWindows className="h-5 w-5 text-sky-900" />
+					<div class="flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+						<FaWindows className="h-5 w-5 text-white" />
 					</div>
 				</div>
 				<div class="mt-auto flex items-center justify-between">
-					<p class="text-xs text-sky-900/80">適合遊戲、辦公等高性能場景</p>
+					<p class="text-xs text-white/80 font-medium">適合遊戲、辦公等高性能場景</p>
 					<a
 						href="https://wiki.manyuzo.com/cutting-edge-tech/02.%E5%9B%BD%E9%99%85%E7%BD%91%E7%BB%9C%E5%86%B2%E6%B5%AA/01.%F0%9F%8D%85%E5%B7%A5%E5%85%B7/windows/download"
 						target="_blank"
