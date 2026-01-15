@@ -58,7 +58,7 @@ const appleTouchIconURL = Astro.site ? new URL(siteConfig.logo, Astro.site).href
       // window.scrollTo(0, 0);
       
       const storedTheme = localStorage.getItem('theme');
-      const theme = storedTheme || 'dark';
+      const theme = storedTheme || 'system';
       document.documentElement.classList.remove('light', 'dark');
       
       if (theme === 'system') {
@@ -69,7 +69,7 @@ const appleTouchIconURL = Astro.site ? new URL(siteConfig.logo, Astro.site).href
       }
       
       if (!storedTheme) {
-        localStorage.setItem('theme', 'dark');
+        localStorage.setItem('theme', 'system');
       }
     </script>
   </head>

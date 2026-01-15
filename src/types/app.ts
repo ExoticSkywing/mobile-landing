@@ -33,9 +33,11 @@ export interface SocialLink {
 }
 
 export interface Screenshots {
-	iphone: string[];
-	ipad: string[];
+	speed: string[];
+	quality: string[];
 }
+
+
 
 export interface AppHeroProps {
 	title: string;

@@ -11,8 +11,8 @@ export interface BreadcrumbsProps {
 }
 
 export interface DeviceToggleProps {
-	activeDevice: "iphone" | "ipad";
-	onToggle: (device: "iphone" | "ipad") => void;
+	activeDevice: "speed" | "quality";
+	onToggle: (device: "speed" | "quality") => void;
 }
 
 export interface RatingStarsProps {

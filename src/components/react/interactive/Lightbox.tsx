@@ -6,18 +6,18 @@ import { areImagesEqual } from "@/types/app";
 
 declare global {
 	interface Window {
-		openLightbox: (index: number, device: "iphone" | "ipad") => void;
+		openLightbox: (index: number, device: "speed" | "quality") => void;
 	}
 }
 
 const Lightbox = ({ images }: LightboxProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [currentIndex, setCurrentIndex] = useState(0);
-	const [activeDevice, setActiveDevice] = useState<"iphone" | "ipad">("iphone");
+	const [activeDevice, setActiveDevice] = useState<"speed" | "quality">("speed");
 	const currentImages = images[activeDevice];
 
 	useEffect(() => {
-		window.openLightbox = (index: number, device: "iphone" | "ipad") => {
+		window.openLightbox = (index: number, device: "speed" | "quality") => {
 			setCurrentIndex(index);
 			setActiveDevice(device);
 			setIsOpen(true);
@@ -129,8 +129,8 @@ const Lightbox = ({ images }: LightboxProps) => {
 								setCurrentIndex(index);
 							}}
 							className={`h-2 w-2 rounded-full transition-colors ${index === currentIndex
-									? "bg-gray-800 dark:bg-white"
-									: "bg-gray-500 dark:bg-white/60 hover:bg-gray-700 dark:hover:bg-white/80"
+								? "bg-gray-800 dark:bg-white"
+								: "bg-gray-500 dark:bg-white/60 hover:bg-gray-700 dark:hover:bg-white/80"
 								}`}
 							aria-label={`Go to image ${index + 1}`}
 						/>
