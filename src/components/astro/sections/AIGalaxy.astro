@@ -60,23 +60,40 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 			</p>
 
 			<!-- AI Attribution Badge -->
-			<div id="ai-badge" class="mb-8 flex items-center gap-2 group cursor-default transition-all duration-300">
-				<div class="relative flex h-2 w-2">
+			<div id="ai-badge" class="mb-8 flex items-start md:items-center gap-2.5 group cursor-default transition-all duration-300">
+				<div class="relative flex h-2 w-2 mt-1.5 md:mt-0 flex-shrink-0">
 					<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
 					<span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
 				</div>
-				<p class="font-mono text-[10px] md:text-xs text-gray-500/80 dark:text-gray-400/80 tracking-wide uppercase transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-300 group-[.is-active]:text-cyan-600 dark:group-[.is-active]:text-cyan-300">
-					<span class="hidden md:inline">As you can see, </span>
-					<span class="font-bold relative inline-block">
-						正如你所见本页面由 <span class="mx-1 text-gray-300 dark:text-gray-600">/</span> 99% AI 算力基建构筑
+				<div class="font-mono text-[11px] md:text-xs text-gray-500/80 dark:text-gray-400/80 tracking-wide uppercase transition-colors flex-1 leading-loose">
+					
+					<!-- Intro Text -->
+					<span>
+						<span class="hidden md:inline">As you can see, </span>
+						<span>正如你所见，本页面由</span>
+					</span>
+
+					<!-- Divider -->
+					<span class="text-gray-300 dark:text-gray-600 mx-1">/</span>
+
+					<!-- AI Stat (Underlined) -->
+					<span class="font-bold relative inline-block whitespace-nowrap text-gray-600 dark:text-gray-300 group-hover:text-cyan-600 dark:group-hover:text-cyan-300 group-[.is-active]:text-cyan-600 dark:group-[.is-active]:text-cyan-300 transition-colors">
+						99% AI 算力
 						<span class="absolute bottom-0 left-0 w-full h-[1px] bg-cyan-500/50 scale-x-0 group-hover:scale-x-100 group-[.is-active]:scale-x-100 transition-transform origin-left duration-500"></span>
 					</span>
-					<span class="mx-1.5 opacity-50">·</span>
-					<span class="font-bold relative inline-block">
-						1% 人类灵感设计主导
+
+					<!-- Divider -->
+					<span class="opacity-50 mx-1">·</span>
+
+					<!-- Human Stat (Underlined) -->
+					<span class="font-bold relative inline-block whitespace-nowrap text-gray-600 dark:text-gray-300 group-hover:text-fuchsia-600 dark:group-hover:text-fuchsia-300 group-[.is-active]:text-fuchsia-600 dark:group-[.is-active]:text-fuchsia-300 transition-colors">
+						1% 人类灵感
 						<span class="absolute bottom-0 left-0 w-full h-[1px] bg-fuchsia-500/50 scale-x-0 group-hover:scale-x-100 group-[.is-active]:scale-x-100 transition-transform origin-left duration-500 delay-100"></span>
 					</span>
-				</p>
+
+					<!-- Suffix -->
+					<span>共筑</span>
+				</div>
 			</div>
 
 			<script>
