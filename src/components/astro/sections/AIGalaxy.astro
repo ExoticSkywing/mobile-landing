@@ -55,6 +55,40 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 					</span>
 				</a>
 			</p>
+
+			<!-- AI Attribution Badge -->
+			<div id="ai-badge" class="mb-8 flex items-center gap-2 group cursor-default transition-all duration-300">
+				<div class="relative flex h-2 w-2">
+					<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+					<span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+				</div>
+				<p class="font-mono text-[10px] md:text-xs text-gray-500/80 dark:text-gray-400/80 tracking-wide uppercase transition-colors group-hover:text-cyan-600 dark:group-hover:text-cyan-300 group-[.is-active]:text-cyan-600 dark:group-[.is-active]:text-cyan-300">
+					<span class="hidden md:inline">As you can see, </span>
+					<span class="font-bold relative inline-block">
+						正如你所见 <span class="mx-1 text-gray-300 dark:text-gray-600">/</span> 99% AI 算力
+						<span class="absolute bottom-0 left-0 w-full h-[1px] bg-cyan-500/50 scale-x-0 group-hover:scale-x-100 group-[.is-active]:scale-x-100 transition-transform origin-left duration-500"></span>
+					</span>
+					<span class="mx-1.5 opacity-50">·</span>
+					<span class="font-bold relative inline-block">
+						1% 人类灵感
+						<span class="absolute bottom-0 left-0 w-full h-[1px] bg-fuchsia-500/50 scale-x-0 group-hover:scale-x-100 group-[.is-active]:scale-x-100 transition-transform origin-left duration-500 delay-100"></span>
+					</span>
+				</p>
+			</div>
+
+			<script>
+				// Auto-trigger AI Badge animation
+				const aiBadge = document.getElementById('ai-badge');
+				if (aiBadge) {
+					setInterval(() => {
+						aiBadge.classList.add('is-active');
+						setTimeout(() => {
+							aiBadge.classList.remove('is-active');
+						}, 2500); // Active duration
+					}, 6000); // Interval
+				}
+			</script>
+			
 			<style>
 				.pro-badge {
 					position: relative;
