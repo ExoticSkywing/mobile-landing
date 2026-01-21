@@ -1,0 +1,20 @@
+# Default cache for HTML - 1 hour (revalidate reasonably often)
+/*
+  Cache-Control: public, max-age=3600
+
+# Aggressive cache for static assets (Images, Fonts, CSS, JS) - 1 Year
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Specific image formats if at root
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+/*.svg
+  Cache-Control: public, max-age=31536000, immutable

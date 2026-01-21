@@ -26,6 +26,13 @@ const { name: title, subtitle, description, storeLinks, logo, logoCrop } = siteC
 ---
 
 <Layout title={title} description={description}>
+  <fragment slot="head">
+    <!-- Preload Hero Images for Performance (LCP) -->
+    <!-- Prioritize based on system preference (matches default first-load behavior) -->
+    <link rel="preload" as="image" href="/assets/apphero/holo-bg-full.png" media="(prefers-color-scheme: light)" />
+    <link rel="preload" as="image" href="/assets/apphero/18-fractal-glass-hero-bg.jpg" media="(prefers-color-scheme: dark)" />
+  </fragment>
+  
   <main class="min-h-screen max-w-5xl mx-auto px-4 pt-0 pb-8">
     <AppHero
       title={title}

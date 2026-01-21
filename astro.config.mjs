@@ -5,7 +5,7 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   integrations: [tailwind(), react()],
-  output: "server",
+  output: "static",
   adapter: cloudflare({
     platformProxy: {
       enabled: false,
