@@ -10,6 +10,7 @@ interface Props {
 
 import IntelligentRouting from "./IntelligentRouting.astro";
 import { IoShieldCheckmark } from "react-icons/io5";
+import { FiChevronRight } from "react-icons/fi";
 
 const { storeLinks = siteConfig.storeLinks } = Astro.props;
 ---
@@ -45,13 +46,15 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 					href={storeLinks.apple}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold whitespace-nowrap border border-gray-200 bg-white/60 text-gray-900 hover:bg-white transition-colors dark:border-white/10 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10"
+					class="group relative inline-flex items-center justify-center px-3 py-1.5 rounded-full text-xs md:text-sm font-semibold whitespace-nowrap border border-blue-200/50 bg-blue-50/50 text-blue-900 hover:bg-blue-100 hover:border-blue-300 transition-all dark:border-blue-400/20 dark:bg-blue-500/10 dark:text-blue-100 dark:hover:bg-blue-500/20 dark:hover:border-blue-400/40 hover:scale-105 active:scale-95 shadow-sm hover:shadow-md hover:shadow-blue-500/10"
 				>
+					<span class="absolute inset-0 rounded-full ring-2 ring-blue-400/20 animate-pulse"></span>
 					<span class="relative flex items-center gap-1.5">
 						<span class="pro-badge px-1.5 py-0.5 rounded text-[10px] font-black uppercase tracking-widest text-black/90 shadow-sm">
 							Pro
 						</span>
-						<span class="tracking-wide">权益</span>
+						<span class="tracking-wide">解锁权益</span>
+						<FiChevronRight className="w-3.5 h-3.5 text-blue-500 dark:text-blue-300 group-hover:translate-x-0.5 transition-transform" />
 					</span>
 				</a>
 			</p>
