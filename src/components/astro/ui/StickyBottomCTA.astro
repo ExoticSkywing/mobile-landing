@@ -6,8 +6,16 @@ import { siteConfig } from "@config/site";
 const { storeLinks } = siteConfig;
 ---
 
-<div id="sticky-cta" class="fixed bottom-6 left-4 right-4 z-50 transform translate-y-[150%] opacity-0 transition-all duration-500 ease-out md:left-1/2 md:-translate-x-1/2 md:max-w-md">
-    <div class="flex items-center justify-between p-2 pl-4 rounded-2xl bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 ring-1 ring-black/5 dark:ring-white/5">
+<div id="sticky-cta" class="fixed bottom-6 left-4 right-4 z-50 transform translate-y-[150%] opacity-0 transition-all duration-500 ease-out md:left-1/2 md:-translate-x-1/2 md:max-w-3xl flex flex-col items-center gap-1.5">
+    
+    <!-- Mobile HUD Slogan (Projected Above) -->
+    <div class="md:hidden flex items-center justify-center pointer-events-none">
+        <span class="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-bold tracking-[0.2em] uppercase shadow-lg ring-1 ring-white/5 text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400 drop-shadow-sm">
+            跨越维度 · 感知未来
+        </span>
+    </div>
+
+    <div class="w-full flex items-center justify-between p-2 pl-4 rounded-2xl bg-white/80 dark:bg-black/80 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 shadow-lg shadow-black/5 dark:shadow-black/20 ring-1 ring-black/5 dark:ring-white/5">
         
         <!-- Left: Brand Info -->
         <div class="flex items-center gap-3 mr-auto">
@@ -20,6 +28,13 @@ const { storeLinks } = siteConfig;
                     官方正版授权
                 </span>
             </div>
+        </div>
+
+        <!-- Center: Slogan (Hidden on Mobile) -->
+        <div class="hidden md:flex flex-1 justify-center px-4 min-w-0">
+            <p class="text-sm font-bold whitespace-nowrap tracking-[0.2em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:via-gray-100 dark:to-gray-400 drop-shadow-sm">
+                跨越维度，感知未来
+            </p>
         </div>
 
         <!-- Right: Actions -->
