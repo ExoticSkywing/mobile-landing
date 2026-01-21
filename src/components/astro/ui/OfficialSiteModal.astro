@@ -1,0 +1,97 @@
+---
+import { MdVerified } from "react-icons/md";
+import { FaShoppingCart, FaExternalLinkAlt } from "react-icons/fa";
+import { siteConfig } from "@config/site";
+import { storeLinks } from "@config/store";
+---
+
+<div
+  id="official-site-modal"
+  class="fixed inset-0 z-[200] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300"
+  aria-hidden="true"
+>
+  <!-- Backdrop -->
+  <div 
+    class="absolute inset-0 bg-black/60 backdrop-blur-md transition-opacity duration-300"
+    onclick="window.closeOfficialModal()"
+  ></div>
+
+  <!-- Modal Content (Dark/Native Style) -->
+  <div 
+    class="relative w-[90%] max-w-sm transform scale-95 opacity-0 transition-all duration-300 flex flex-col items-center p-8 rounded-3xl border border-white/10 bg-gray-900/90 shadow-2xl backdrop-blur-xl ring-1 ring-white/5"
+    id="official-modal-content"
+  >
+    <!-- Icon -->
+    <div class="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/20 shadow-inner shadow-blue-500/10">
+      <MdVerified className="h-8 w-8 text-blue-400" />
+    </div>
+
+    <!-- Title -->
+    <h3 class="mb-3 text-xl font-bold text-white text-center tracking-tight">
+      进入官方网站?
+    </h3>
+
+    <!-- Body -->
+    <p class="mb-8 text-sm text-gray-400 text-center leading-relaxed font-medium">
+      为保障服务质量，官网仅对持有 <span class="text-white font-bold">邀请码</span> 的用户开放。若无邀请码，建议直接使用快捷通道。
+    </p>
+
+    <!-- Actions -->
+    <div class="flex flex-col w-full gap-3">
+      <!-- Primary Action: Return / Quick Buy -->
+      <button
+        onclick="window.closeOfficialModal()"
+        class="group relative flex items-center justify-center gap-3 w-full rounded-xl bg-white text-black py-3.5 shadow-lg shadow-white/5 transition-all hover:bg-gray-100 hover:scale-[1.02] active:scale-95"
+      >
+        <FaShoppingCart className="text-black/80" />
+        <span class="font-bold tracking-wide">返回主页使用快捷通道</span>
+      </button>
+
+      <!-- Secondary Action: Have Code -->
+      <button
+        id="btn-have-code"
+        class="mt-2 flex items-center justify-center gap-2 w-full py-2 text-xs font-medium text-gray-500 hover:text-white transition-colors"
+      >
+        <span>我有邀请码，继续访问</span>
+        <FaExternalLinkAlt className="text-[10px] opacity-70" />
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  window.OFFICIAL_URL = "https://pxkj.qsjt.shop"; 
+
+  window.openOfficialModal = (url) => {
+    // Only override if url is valid and not a placeholder
+    if (url && url !== '#' && url !== '') window.OFFICIAL_URL = url;
+    
+    const modal = document.getElementById('official-site-modal');
+    const content = document.getElementById('official-modal-content');
+    
+    if (modal && content) {
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      content.classList.remove('scale-95', 'opacity-0');
+      content.classList.add('scale-100', 'opacity-100');
+    }
+  };
+
+  window.closeOfficialModal = () => {
+    const modal = document.getElementById('official-site-modal');
+    const content = document.getElementById('official-modal-content');
+    
+    if (modal && content) {
+      content.classList.remove('scale-100', 'opacity-100');
+      content.classList.add('scale-95', 'opacity-0');
+      
+      setTimeout(() => {
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      }, 200);
+    }
+  };
+
+  document.getElementById('btn-have-code')?.addEventListener('click', () => {
+    window.open(window.OFFICIAL_URL, '_blank');
+    window.closeOfficialModal();
+  });
+</script>
