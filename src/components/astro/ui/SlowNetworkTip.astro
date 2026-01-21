@@ -1,0 +1,66 @@
+---
+---
+
+<div
+  id="slow-network-tip"
+  class="fixed top-0 left-0 right-0 z-[100] -translate-y-full transition-transform duration-500 ease-out pointer-events-none"
+>
+  <div class="mx-auto max-w-md p-4">
+    <div
+      class="pointer-events-auto flex items-center justify-between gap-4 rounded-2xl border border-white/20 bg-white/10 p-4 shadow-xl backdrop-blur-xl dark:bg-black/40 dark:border-white/10 ring-1 ring-black/5"
+    >
+      <div class="flex items-center gap-3">
+        <div class="relative flex h-3 w-3">
+          <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber-400 opacity-75"></span>
+          <span class="relative inline-flex h-3 w-3 rounded-full bg-amber-500"></span>
+        </div>
+        <div class="text-xs sm:text-sm">
+          <p class="font-bold text-white">正在接入全球加速节点...</p>
+          <p class="text-white/80">首次连接可能需要 5-10 秒</p>
+        </div>
+      </div>
+      
+      <button
+        onclick="window.location.reload()"
+        class="flex-shrink-0 rounded-lg bg-white/20 px-3 py-1.5 text-xs font-bold text-white transition-colors hover:bg-white/30 active:scale-95"
+      >
+        ⚡ 刷新加速
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    // Configuration
+    const THRESHOLD = 8000; // 8 seconds as requested
+    
+    // Logic
+    const tip = document.getElementById('slow-network-tip');
+    let loadTimer;
+    let isSlow = false;
+
+    // Start timer immediately
+    loadTimer = setTimeout(() => {
+      // If we are here, it means the page load took longer than THRESHOLD
+      isSlow = true;
+      if (tip) {
+        tip.classList.remove('-translate-y-full');
+      }
+    }, THRESHOLD);
+
+    // Cancel timer if connected quickly
+    window.addEventListener('load', () => {
+      if (!isSlow) {
+        clearTimeout(loadTimer);
+      } else {
+        // If it was already shown, maybe hide it after a few seconds of success? 
+        // Or keep it to let them know it finished? 
+        // For now, let's auto-hide it after load completes to define "Success"
+        setTimeout(() => {
+           if (tip) tip.classList.add('-translate-y-full');
+        }, 2000);
+      }
+    });
+  })();
+</script>

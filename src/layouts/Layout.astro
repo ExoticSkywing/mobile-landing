@@ -3,8 +3,9 @@
 /** biome-ignore-all lint/correctness/noUnusedVariables: variables used in Astro components */
 
 import Footer from "@astro/sections/Footer.astro";
-import { siteConfig } from "@config/site";
 import BackToTop from "@react/ui/BackToTop";
+import SlowNetworkTip from "@astro/ui/SlowNetworkTip.astro";
+import { siteConfig } from "@config/site";
 import type { LayoutProps } from "@/types/ui";
 
 interface Props extends LayoutProps {}
@@ -80,6 +81,7 @@ const appleTouchIconURL = Astro.site ? new URL(siteConfig.logo, Astro.site).href
       <Footer />
     </div>
     <BackToTop client:load />
+    <SlowNetworkTip />
   </body>
 </html>
 
