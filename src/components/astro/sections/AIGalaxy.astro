@@ -41,8 +41,9 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 				<span class="text-3xl md:text-5xl font-semibold leading-none bg-gradient-to-r from-sky-400/80 via-violet-400/80 to-fuchsia-400/80 dark:from-sky-200/95 dark:via-violet-300/95 dark:to-fuchsia-200/95 bg-clip-text text-transparent">
 					网络调优计划
 				</span>
+				{siteConfig.proBenefits.enabled && (
 				<a
-					href={storeLinks.apple}
+					href={siteConfig.proBenefits.link ?? storeLinks.apple}
 					target="_blank"
 					rel="noopener noreferrer"
 					class="group/pro inline-flex items-center justify-center px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold whitespace-nowrap border border-gray-200 bg-white/60 text-gray-900 hover:bg-white hover:border-violet-200 hover:shadow-[0_0_15px_rgba(167,139,250,0.3)] transition-all dark:border-white/10 dark:bg-white/5 dark:text-white/90 dark:hover:bg-white/10 dark:hover:border-violet-500/30"
@@ -51,12 +52,13 @@ const { storeLinks = siteConfig.storeLinks } = Astro.props;
 						<span class="pro-badge px-1.5 py-0.5 rounded text-[10px] font-black uppercase tracking-widest text-black/90 shadow-sm">
 							Pro
 						</span>
-						<span class="tracking-wide group-hover/pro:text-violet-600 dark:group-hover/pro:text-violet-300 transition-colors">权益</span>
+						<span class="tracking-wide group-hover/pro:text-violet-600 dark:group-hover/pro:text-violet-300 transition-colors">{siteConfig.proBenefits.label}</span>
 						<svg class="w-3.5 h-3.5 text-gray-400 group-hover/pro:text-violet-500 group-hover/pro:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
 						</svg>
 					</span>
 				</a>
+				)}
 			</p>
 
 			<!-- AI Attribution Badge -->

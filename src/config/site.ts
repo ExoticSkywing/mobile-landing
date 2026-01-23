@@ -13,5 +13,10 @@ export const siteConfig = {
 		apple: "https://xingxy.manyuzo.com",
 		google: "https://t.me/paraspacesupport",
 	},
+	// White Label Config
+	proBenefits: {
+		enabled: true,
+		label: "权益",
+	},
 	socialLinks,
 } as const;
