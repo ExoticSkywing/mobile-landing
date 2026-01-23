@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { memo, useCallback } from "react";
-import { IoImageOutline, IoRocketOutline } from "react-icons/io5";
+import { IoDiamondOutline, IoRocketOutline } from "react-icons/io5";
 import type { DeviceToggleProps } from "@/types/ui";
 
 const DeviceToggle = ({ activeDevice, onToggle }: DeviceToggleProps) => {
@@ -21,8 +21,62 @@ const DeviceToggle = ({ activeDevice, onToggle }: DeviceToggleProps) => {
 				isActive={activeDevice === "quality"}
 				onClick={handleQualityClick}
 				label="质量"
-				icon={<IoImageOutline className="w-4 h-4" />}
+				icon={<IoDiamondOutline className="w-4 h-4" />}
+				withSparkle={true}
+				withPulse={true}
 			/>
+		</div>
+	);
+};
+
+// Continuous Pulse: Ensures visibility at any time, not just on entry
+const PulseText = ({ text }: { text: string }) => {
+	return (
+		<motion.span
+			animate={{
+				opacity: [0.8, 1, 0.8],
+				textShadow: [
+					"0 0 0px rgba(74,222,128,0)",
+					"0 0 12px rgba(74,222,128,0.8)", // Intense Green Neon Glow
+					"0 0 0px rgba(74,222,128,0)"
+				],
+				color: ["#9ca3af", "#4ade80", "#9ca3af"] // Gray -> Green -> Gray force color shift
+			}}
+			transition={{
+				duration: 0.8, // Rapid Heartbeat (~75 BPM)
+				repeat: Infinity,
+				ease: "easeInOut"
+			}}
+			className="font-bold tracking-wide" // Thicker text for visibility
+		>
+			{text}
+		</motion.span>
+	);
+}
+
+const SparkleIcon = ({ icon }: { icon: React.ReactNode }) => {
+	return (
+		<div className="relative">
+			{icon}
+			<motion.div
+				className="absolute -top-1.5 -right-1.5 text-green-400 dark:text-green-300 pointer-events-none"
+				initial={{ opacity: 0, scale: 0 }}
+				animate={{
+					opacity: [0, 1, 0],
+					scale: [0.5, 1.5, 0.5], // Expanded range
+					rotate: [0, 90, 180]
+				}}
+				transition={{
+					duration: 0.6, // Even faster bloom (was 0.8)
+					repeat: Infinity,
+					repeatDelay: 0.2, // Extreme frequency: 0.2s (was 0.5)
+					ease: "easeInOut"
+				}}
+			>
+				<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+				</svg>
+			</motion.div>
 		</div>
 	);
 };
@@ -33,11 +87,15 @@ const DeviceButton = memo(
 		onClick,
 		label,
 		icon,
+		withSparkle = false,
+		withPulse = false,
 	}: {
 		isActive: boolean;
 		onClick: () => void;
 		label: string;
 		icon: React.ReactNode;
+		withSparkle?: boolean;
+		withPulse?: boolean;
 	}) => (
 		<motion.button
 			type="button"
@@ -55,8 +113,12 @@ const DeviceButton = memo(
 					transition={{ type: "spring", bounce: 0.15, duration: 0.5 }}
 				/>
 			)}
-			<span className="relative z-10 inline flex-shrink-0">{icon}</span>
-			<span className="relative z-10">{label}</span>
+			<span className="relative z-10 inline flex-shrink-0">
+				{withSparkle ? <SparkleIcon icon={icon} /> : icon}
+			</span>
+			<span className="relative z-10 min-w-[2em] text-center">
+				{withPulse && !isActive ? <PulseText text={label} /> : label}
+			</span>
 		</motion.button>
 	),
 );
