@@ -9,9 +9,9 @@ export const screenshots: Screenshots = {
 		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/IMG_9905.MP4",
 	],
 	quality: [
-		"https://api.minio.1yo.cc/nebuluxe/halosparkpix/image-fcgk.png",
-		"/assets/screenshots/ipad/1.png",
-		"/assets/screenshots/ipad/2.png",
-		"/assets/screenshots/ipad/3.png",
+		"/assets/screenshots/ipad/IMG_6065.webp",
+		"/assets/screenshots/ipad/IMG_6077.webp",
+		"/assets/screenshots/ipad/IMG_6080.webp",
+		"/assets/screenshots/ipad/IMG_6083.webp",
 	],
 };
