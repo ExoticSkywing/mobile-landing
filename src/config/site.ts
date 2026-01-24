@@ -16,7 +16,7 @@ export const siteConfig = {
 	// White Label Config
 	proBenefits: {
 		enabled: true,
-		label: "权益",
+		label: "免费使用",
 		link: "https://1keyid.1yo.cc", // Custom Link
 	},
 	socialLinks,
