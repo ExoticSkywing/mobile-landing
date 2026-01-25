@@ -6,6 +6,7 @@ import Footer from "@astro/sections/Footer.astro";
 import BackToTop from "@react/ui/BackToTop";
 import SlowNetworkTip from "@astro/ui/SlowNetworkTip.astro";
 import OfficialSiteModal from "@astro/ui/OfficialSiteModal.astro";
+import NeonContextMenu from "@astro/ui/NeonContextMenu.astro";
 import { siteConfig } from "@config/site";
 import type { LayoutProps } from "@/types/ui";
 
@@ -84,6 +85,7 @@ const appleTouchIconURL = Astro.site ? new URL(siteConfig.logo, Astro.site).href
     <BackToTop client:load />
     <SlowNetworkTip />
     <OfficialSiteModal />
+    <NeonContextMenu />
   </body>
 </html>
 
